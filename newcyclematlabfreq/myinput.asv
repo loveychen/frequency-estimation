@@ -1,0 +1,36 @@
+function [Vk,inputvolt_length,N,Fs,Vrms,time_stamp]= myinput(F)
+% SYNTAX -------------------------------------------------------
+%       [Vk,inputvolt_length,N,Fs,Vrms,time_stamp] =myinput(48);
+% where       Vk   = input sampled 3 phase voltage
+% inputvolt_length = length of input signal
+%
+% Author:   Sandesh Gandhi & Chetan Tonde
+%           c/o Power Anser Labs, IIT Bombay and Electrical Dept., 
+%           College of Engineering Pune.
+%           Updated : 15th April. 2008
+%----------------------------------------------------------------
+N=50; % samples per cycle
+Fs=N*F0;
+W=2*pi*F;
+w=2*pi*F/Fs;
+
+inputvolt_length=30000;
+time_stamp=(1:inputvolt_length)/Fs;
+
+dt=0.0004;
+V=zeros(3,inputvolt_length);
+V(1,:)= Vmax*(sin(W*time_stamp));
+V(2,:)= Vmax*(sin(W*time_stamp-2*pi/3));
+V(3,:)= Vmax*(sin(W*time_stamp+2*pi/3));
+% plot(time_stamp,V(1,:)','r');
+% hold on;plot(time_stamp,V(2,:)','y');
+% hold on;plot(time_stamp,V(3,:)','b');
+% grid on;
+
+Vk=zeros(3,inputvolt_length);
+k=1:inputvolt_length;
+Vk(1,:)= Vmax*(sin(w*k));
+Vk(2,:)= Vmax*(sin(w*k-2*pi/3));
+Vk(3,:)= Vmax*(sin(w*k+2*pi/3));
+freq(1:inputvolt_length)=F;
+[h]=myplotgraph(freq,6,'c');

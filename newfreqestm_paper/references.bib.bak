@@ -1,0 +1,239 @@
+@book{integer,
+author    = "Laurence A. Wolsey ",
+title     = "Integer Programming",
+publisher = "John Wiley and Sons",
+address   = "USA",
+year      = "1998"
+};
+@book{harary,
+author   = "Frank Harary",
+title    = "Graph Theory",
+publisher = "Addison-Wesley",
+address   = "Reading, Massachusetts",
+year      = "1995"
+};
+@book{garey,
+author    = "Michael R. Garey and David S.Johnson",
+title     = "Computers and Intractability:A Guide to the Theory of NP-Completeness",
+publisher = "W.H.Freeman and Company",
+address   = "New York",
+year      = "1979"
+};
+@book{dantzig,
+author    = "George B. Dantzig and Mukund N. Thapa",
+title     = "Linear Programming 1:Introduction",
+publisher = "Springer",
+address   = "Berlin",
+year      = "1997"
+};
+
+
+@book{papad,
+author    = "Christos H. Papadimitriou and Kenneth Steiglitz",
+title     = "Combinatorial Optimization:Algorithms and Complexity",
+publisher = "Prentice Hall of India",
+address   = "New Delhi",
+year      = "1997"
+};
+
+@book{gill,
+author    = "Philip Gill and W.Murray and M.Wright",
+title     = "Numerical Linear Algebra and Optimization",
+publisher = "Addison-Wesley",
+address   = "California",
+year      = "1991"
+};
+@article{vcp2,
+author    = "V. C. Prasad and Satish J. and V. Shankar and K. S. P. Rao",
+title     = "A fast method for the determination of break points for computer aided coordination of directional relays",
+journal   = "Electrical Machines and Power Systems",
+volume    = "18",
+month     = jan,
+year      = "1990",
+pages     = "53-69"
+};
+
+@article{vcp3,
+author    = "V. C. Prasad and K. S. P. Rao and A. S. Rao",
+title     = "Coordination of directional relays without generating all circuits",
+journal   = "IEEE Transactions on Power Delivery",
+volume    = "6, No.2",
+month     = apr,
+year      = "1991",
+pages     = "584-590"
+};
+
+
+@article{oops,
+author    = " Shubha Pandit and S. A. Soman and S. A. Khaparde  ",
+title     = "Object-oriented design for power system applications",
+journal   = "IEEE Transactions on Power Systems ",
+volume    = "16, No. 4",
+month     =Nov,
+year      = "2001",
+pages     = "647-652"
+};
+
+@article{mad1,
+author    = "S. M. Madani and H. Rijanto",
+title     = "A New Application of Graph Theory for coordination of protective relays",
+journal   = "IEEE Power Engineering Review",
+month     = jun,
+year      = "1998",
+};
+
+                  
+
+@book{practical,
+author  = "R. Fletcher",
+title     = "Practical Methods of Optimization",
+publisher = "John Wiley and Sons",
+address	= "Singapore",
+year	= "2004"
+};
+
+@book{Ourbook,
+author    = "S. A. Soman and S. A. Khaparde and Shubha Pandit",
+title     = "Computational Methods For Large Sparse Power Systems
+Analysis: An Object oriented Approach",
+publisher = "Kluwer Academic Publishers",
+address   = "London",
+year      = "2001"
+};
+
+
+@article{dwar,
+author = "M. H. Dwarkanath and L. Nowitz",
+title = "An application of Linear Graph Theory for coordination of directional overcurrent relays",
+journal ="Electrical Power Problems-The Mathematical Challenge,SIAM Meeting",
+year=  "1980",
+pages ="104-114"
+};
+
+
+
+@conference{knabel,
+author    = "A. H. Knabel",
+title     = "A standardized approach to relay Coordination",
+publisher   = "IEEE Winter Power Meeting Conference",
+year      = "1969"
+};
+@inproceedings{iran,
+author    = "S. Jamali and H. Shateri",
+title     = "A Branch-Based Method to Break-Point Determination for Coordination of Over-Current and Distance Relays",
+booktitle   = "2004 International Conference on Power System Technology-POWERCON 2004",
+volume      = "2",
+pages = "1857-1862",
+address     = "Singapore",
+month     = nov # "21--24,",
+year      = "2004"
+};
+@article{vcp1,
+author    = "V. V. B. Rao and K. S. Rao",
+title     = "Computer aided coordination of directional relay: Determination of break points",
+journal   = "IEEE Transactions on Power Delivery ",
+volume    = "3, No.2 ",
+month     =Apr,
+year      = "1988",
+pages     = "545-548"
+};
+
+@article{venk1,
+author ="M. J. Damborg and R. Ramaswami and S. S. Venkata and J. M.
+Postforoosh",
+title ="Computer Aided Transmission Protection System Design,
+Part-I--Algorithms",
+journal ="IEEE Transactions on Power Apparatus and Systems",
+volume = "PAS-103, No.1",
+month = Jan,
+year = "1984",
+pages = "51-59"
+};
+@article{venk2,
+author    = "M. J. Damborg and R. Ramaswami and S. S. Venkata and J. M. Postforoosh",
+title     = "Computer aided transmission protection system design- part(ii) implementation and results",
+journal   = "IEEE Transactions on Power Apparatus and Systems ",
+volume    = "PAS-103 No.1",
+month     =  Jan,
+year      = "1984",
+pages     = "60-65"
+};
+
+@article{venk3,
+author    = "M. J. Damborg and R. Ramaswami and S. S. Venkata and J. M. Postforoosh and A. K. Jampala",
+title     = "Enhanced algorithms for transmission protection relay coordination",
+journal   = "IEEE Transactions on Power Delivery ",
+volume    = "PWRD-1 No.1",
+month     =Jan,
+year      = "1986",
+pages     = "280-287"
+};
+@article{mad2,
+author    = "S. M. Madani and H. Rijanto",
+title     = "A new approach for designing of power system protection",
+journal   = "Sixth International Conference",
+volume    = "PWRD-1 No.1",
+year      = "1997",
+pages     = "70-73"
+};
+@techreport{EPRI1,
+author ="M. J. Damborg and S. S. Venkata",
+title ="Specification of Computer Aided design of Transmission
+Protection Systems",
+institution ="Department of Electrical Engineering, University of
+Washington",
+address ="Seattle, Washington",
+number ="EL337",
+month =jan,
+year ="1984"
+};
+@article{birla,
+author    = "H. O. Gupta and D. Birla and R. P. Maheshwari",
+title     = "Time overcurrent relay coordination: A review",
+journal   = "International Journal of emerging Electric Power Systems",
+volume    = "2",
+year      = "2005",
+};
+@article{jenk,
+author    = "L. Jenkins and H. P. Khincha and S. Shivkumar and P. K. Dash",
+title     = "An application of Functional dependencies to the topological analysis of Protection Schemes",
+journal   = "IEEE Transactions on Power Delivery",
+volume    = "7, No.1",
+year      = "1992",
+pages     = "77-83"
+};
+@article{chinese,
+author   = "Quanming Yue and Feipeng Lu and Weiyong Yu and Jie Wang",
+title    = "A Novel Algorithm to determine Minimum Break point set for optimum cooperation of Directional Protection Relays in multiloop networks",
+journal  = "IEEE Transactions on Power Delivery",
+volume   = "21, No.3",
+year     = "2006",
+month    = Jul,
+pages    = "1114 - 1119"
+};
+@article{madaninew,
+author   ="S. M. Madani and H. Rijanto",
+title    ="Protection co-ordination: determination of the break point set",
+journal  ="IEE Proceedings,General Transmission Distribution",
+volume   ="145, No.6",
+month    =Nov,
+year     ="1998"
+};
+@inproceedings{westindies,
+author ="M. K. S. Sastry",
+title ="Simplified algorithm to determine break point relays and relay coordination based on network topology",
+booktitle ="IEEE International Symposium on Circuits and Systems, ISCAS 2005",
+volume = "1",
+month = may # "23--26",
+year = "2005",
+pages = "772-775"
+};
+@inproceedings{ade,
+author ="Rajeev Kumar Gajbhiye and Anindya De and Rupesh Helwade and S A Soman",
+title ="A Simple and Efficient Approach to Determination of Minimum Set of Break Point Relays for Transmission Protection System Coordination",
+booktitle ="2005 International Conference on Future Power Systems, Available on IEEE Xplore",
+month = nov # "16--18",
+year = "2005",
+};
+
+

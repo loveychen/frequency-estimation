@@ -1,0 +1,21 @@
+This is pdfTeX, Version 3.141592-1.40.4 (MiKTeX 2.7) (preloaded format=latex 2008.6.4)  9 JUN 2008 17:22
+entering extended mode
+**algo.tex
+(algo.tex
+LaTeX2e <2005/12/01>
+Babel <v3.8h> and hyphenation patterns for english, dumylang, nohyphenation, ge
+rman, ngerman, french, loaded.
+! Undefined control sequence.
+l.1 \section
+            {The Proposed Method}
+? x
+ 
+Here is how much of TeX's memory you used:
+ 6 strings out of 95341
+ 71 string characters out of 1184221
+ 44877 words of memory out of 1500000
+ 3290 multiletter control sequences out of 110000
+ 3640 words of font info for 14 fonts, out of 1200000 for 2000
+ 14 hyphenation exceptions out of 8191
+ 5i,0n,1p,43b,8s stack positions out of 5000i,500n,10000p,200000b,5000s
+No pages of output.

@@ -1,0 +1,84 @@
+\section{INTRODUCTION}
+We consider the problem of directional relay coordination in a meshed system. The directional relay coordination problem becomes iterative in nature whenever the system has a simple loop.
+To see this, let us consider a simple loop system shown in fig~\ref{fig:first}. Suppose we first set the relay 1. Then the sequence of relay setting for the clockwise loop is: $1\to 4\to 3\to 2\to 1$ (to be read from left to right). Since, the setting 
+of relay 1 may be disturbed in the last step because of coordination requirements with relay 2, the process of relay setting 
+may have to be repeated until there is no perceivable change in the setting of relay 1. In this way, the coordination problem for system with simple loop(s) becomes iterative. To design `good' relay
+coordination procedure, one must choose initial set of relays  to be set, with care. Relays in this set should satisfy the following desirable conditions:
+\begin{enumerate}
+\item For each directional coordination loop, there must be at least
+one relay in this set which is incident on this loop. This ensures, that
+all directional loops will be coordinated. Since opening of these relays opens all 
+directed simple loops, this set is called the \emph{Break Point Set} (abbreviated as BPS).
+\item The cardinality of the BPS should be \emph{minimal} i.e. no proper subset of the BPS should be a BPS itself. The \emph{minimum} cardinality BPS is known as the Minimum Break Point Set (abbreviated as MBPS). In general, multiple BPS may satisfy the MBPS criterion. If the initial relay set corresponds to MBPS, then the convergence property of the directional relay coordination algorithm improves significantly. Hence, the minimum relay BPS  computation problem has been well researched in literature.   
+\item If the BPS is chosen as per criteria (1) and (2), it is still possible that there may be dependency
+in the relay settings of the MBPS (Refer section VI for concrete examples). This dependency should be minimized. Hence, we also desire a \emph{maximum independent}, minimal (preferably minimum) BPS. \emph{While criteria (1) and (2) are known in the existing state
+of art, criterion (3) is proposed for the first time in this paper.} 
+\end{enumerate}
+
+
+\begin{figure}
+{\centering
+{\includegraphics[scale=0.5]{fourbus}\\
+\caption{4 bus Single Loop System}
+\label{fig:first}
+}
+}
+\end{figure}
+
+
+The idea of BPS in relay coordination was first introduced in \cite{knabel}. Reference \cite{EPRI1} is a comprehensive technical report on this issue detailing ways to enumerate 
+all directed loops in a network, finding a minimal break point set, relay sequence matrix and sequential
+primary backup pairs. References \cite{venk1,venk2,venk3}  discuss
+approaches on similar lines. Their approach is 
+an improvement over the graph theoretic approach by Dwarakanath and Nowitz \cite{dwar}. 
+Some of the inefficiencies in the earlier approach of \cite{EPRI1} has
+been addressed in \cite{vcp1,vcp2,vcp3}.
+%}References \cite{vcp1,vcp2,vcp3}
+%}address some inefficiencies in the earlier approaches of \cite{EPRI1}. 
+\emph{Rao et. al.} in \cite{vcp1} introduced the notion of loop matrix 
+$L_D$\footnote{The columns stand for relays and the rows for  directed loops}. 
+In \cite{vcp1}, the MBPS problem was 
+mapped to finding the minimum \emph{cover} of relays such that their span is the whole set of directed
+loops. However, the minimum cover problem is the set-cover problem
+which is known to be NP-Complete \cite{garey}. Using boolean functions
+and boolean algebraic manipulations, authors in \cite{vcp1}{} manage
+to get the minimum break point set. At the same time, it requires 
+exponential time computational effort (which is expected as the problem to which the MBPS
+problem was mapped is NP-Complete). This is in contrast to earlier approaches 
+like \cite{EPRI1} where a minimal and not a minimum set was obtained. 
+The paper also gave a simplistic way of finding all the simple loops.
+ Authors in \cite{venk1} have suggested use of \emph{depth first search} in order to enumerate all the loops. In \cite{vcp2},
+it is reported that \emph{breadth first search} can further enhance the efficiency of finding all the loops. Methodology developed in \cite{vcp3} does not require generation of all the directed loops. In \cite{jenk}, authors have applied the concept of
+functional dependency to the topological analysis of the graph. This did not require the computation of all possible loops in the circuit
+and also did not require exponential time but settled for suboptimal solutions. This approach is extended by \emph{Madani et. al.} in \cite{mad1,mad2}. \emph{Madani et. al.}{} in \cite{madaninew}{} have tried to improve their algorithm by using concept of partitioning graphs into forest. \emph{Jamali et. al.} in \cite{iran} have tried to take advantage of the network decomposition ideas introduced in \cite{madaninew} and take a polynomial time approach but can end with rather  suboptimal results. 
+It may be noted that most of the approaches except \cite{dwar}, \cite{vcp1} and \cite{vcp3}  do not give the optimum set
+but rather a sub-optimal one. 
+The authors in \cite{ade} have developed a better heuristic recognizing that the problem may
+ be \mbox{NP-Complete}. In this approach, at each step, a bus which
+ participates in maximum number of coordination loops is chosen.
+ Subsequently, all the relays on that bus are selected in the MBPS.
+ This procedure is repeated until there are no coordination loops left
+ in the network.
+ \emph{Sastry} in \cite{westindies} has tried a similar approach where a bus with the highest degree 
+ is chosen and all the relays on that bus are removed. This process is carried out until 
+ no more loops are left in the system. Though the proposed algorithm is polynomial time, 
+ the solution is not guaranteed to be exact.  Recently in \cite{chinese}, \emph{Yue et. al.} have tried to circumvent the problem 
+ of enumerating all the loops and solving the problem in polynomial time but end up with suboptimal results (refer section VI). Their approach is in essence a greedy algorithm where the criterion is to remove that relay at each stage which serves as the backup relay to maximum number of relays. It may
+ be noted that the approach in \cite{ade} is also a greedy approach but gives much better results than \cite{chinese}. On the other hand, it has to pay the price of
+ being an exponential time algorithm compared to the approach in \cite{chinese} which is a polynomial time algorithm.
+  
+ 
+In this paper, we formulate the following optimal BPS computation problem as ILP:
+\begin{itemize}
+\item MBPS computation problem.
+\item Maximum independent minimal BPS computation problem.
+\end{itemize}
+ Subsequently, algorithms like
+cutting plane algorithm and branch and bound algorithm are used for solving this \mbox{NP-hard} problem (ILP is \mbox{NP-hard}). The proposed approach guarantees optimal solution. As ILP itself is \mbox{NP-hard}, the problem may require exponential time in the worst case scenario.  Therefore, for large systems,  we also develop a decomposition approach. The proposed algorithm has shown extremely good performance.
+
+It is assumed throughout the paper that we are dealing with systems where every relay is incident on at least one loop. Otherwise such relays may be eliminated in the preprocessing step and such an elimination neither affects the cardinality of the MBPS nor the maximum independent minimal BPS. It is further assumed that the network we are dealing with is a connected network. 
+In case the network is not connected, we can separate the components of the network in the preprocessing step and then deal separately with the components. Throughout the paper, the term `optimal BPS' stands for both the MBPS as well
+as maximum independent minimal BPS.
+
+The paper is organized as follows. Section II formulates the optimal BPS problem as an ILP. Section III describes the proposed algorithm. An illustrative example is worked out in section IV. Section V deals with  techniques required for large scale implementation.  Section VI has the results and analysis
+of various algorithms. Section VII discusses certain pathological cases or exceptions to the generic behavior. Section VIII concludes the paper.

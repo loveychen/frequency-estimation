@@ -1,0 +1,8 @@
+\section{CONCLUSIONS}
+This paper has proposed a new method of computing system frequency that consides dynamic performance of the reported frequency. The following results were obtained:
+\begin{enumerate}
+\item the proposed method is found to be accurate with error\% within 0.01\% for frequencies in the range of 47-53 Hz and its accuracy fairly depends upon the accuracy of the lookup table of sinc used.
+\item The time for estimating frequency is independent of the value of frequency. Once the required accuracy is set, the data window size i.e. value of $k$ can be fixed.
+\item by varying the data window size from one cycle ($k=1$) till four cycles ($k=4$) the algorithm gave better results but at the expense of a delay of $2k$ cycles.
+\item for estimating the rate-of-change of frequency the algorithm showed encouraging results for clean signals and noisy signals when $k=3$ or $k=4$ cycles.
+\end{enumerate}

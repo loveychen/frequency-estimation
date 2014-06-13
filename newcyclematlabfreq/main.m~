@@ -1,0 +1,374 @@
+%% Description: Program simulates the proposed method
+%----------------------------------------------------------------
+% main.m simulates the  proposed method
+% Note: The required files in the main should be store in the
+% same directory as main.m
+% The required files and their description is given as follows:
+%
+%   myinput.m       : Generates input of constant frequency signal
+%   mykinput.m      : Generates input of varying  frequency signal
+%   avgvolt.m       : Recursive moving average of signal 
+%   recdft.m        : Recursive DFT of the signal
+%   newkval.m       : Preprocessing for Rate of change in Frequency
+%   sincfreq.m      : Implementation of Schmitt Trigger to give delta_f     
+%   seqcomp.m       : Finds positive sequence components
+%   myplotgraph.m   : Plots the graph of input signal
+%   phadke_thorp.m  : Phadke_Thorp implementation
+%   p3ph_pll.mdl    : PLL method implementation
+%   zcdfreq.m       : Calculate frequency using ZCD method
+
+%   Authors         : Sandesh Gandhi & Chetan Tonde
+%                     c/o Power Anser Labs, IIT Bombay and 
+%                     Electrical Dept. COE Pune.
+%   Updated         : 10th MAY 2008
+%----------------------------------------------------------------
+
+%% +++++++++++++++++++++++++++NOTES+++++++++++++++++++++++++++++++
+% THE FOLLOWING IS THE EXHAUSTIVE IMPLEMENTATION OF VARIOUS FREQUENCY
+% AND RATE OF CHANGE OF FREQUENCY (i.e. K ) ESTIMATION TECHNIQUES ON 
+% VARIOUS INPUT FREQUENCIES
+% 1) Our original algorithm
+% 2) Our modified algorithm
+% 3) Our original K ESTIMATION algorithm
+% 4) Our modified K ESTIMATION algorithm
+% 5) PHADKE-THORP METHOD
+% 6) ZERO CROSS DETECTOR METHOD
+% 7) PLL METHOD
+
+close all
+clear all
+clc
+%profile on;
+%profile clear;
+
+%% Global Settings
+global F0;F0=50;    % nominal frequency 50 Hz
+global N;N=50;      % N is samples per cycle of original signal
+global Fs;Fs=N*F0;  % Sampling Frequency
+global inputvolt_length;inputvolt_length=30000; % 20 cycles (0.4 sec)
+global time_stamp;time_stamp=(1:inputvolt_length)/Fs;
+
+minfreq=1;    % min frequency in the sinc table
+maxfreq=74;   % max frequency in the sinc table
+dfreq=0.001;  % step size in sinc table ( accuracy depends on this )
+global freqtable;freqtable = maxfreq:-dfreq:minfreq;% keep descending order
+global sinctable;sinctable = sinc(freqtable/F0);
+
+global Vmax;Vmax=300;% Input Voltage Magnitude
+Vschmitt=275;        % Calibration for schmitt trigger for freq
+kVschmitt=Vschmitt^2;% Calibration for schmitt trigger for kfreq
+cycles=1;            % number of cycles for which avg is to be done
+kcycles=1;           % similar for k estimation
+Nc = N*cycles;       % We have Nc samples data window for freq 
+kNc= N*kcycles;      % We have kNc samples data window for kfreq
+global h;
+
+
+
+
+%% Choose your Input voltage system from below: 
+% [Vin] = myinput(53); 
+ [Vin] = mykinput; 
+% [Vin] = inputvolt('rybdata/data1415-1550.adf');
+
+%% Synthesis of new shifted signal to improve sensitivity 
+Vkcos=zeros(3,inputvolt_length);
+Vk=zeros(3,inputvolt_length);
+syscos=cos(2*pi*(1-1/cycles)*F0*time_stamp);
+syssin=sin(2*pi*(1-1/cycles)*F0*time_stamp);
+Vkcos=[(Vin(3,:)-Vin(2,:))/sqrt(3);(Vin(1,:)-Vin(3,:))/sqrt(3);...
+       (Vin(2,:)-Vin(1,:))/sqrt(3)];
+Vk(1,:)=Vin(1,:).*syscos-Vkcos(1,:).*syssin;
+Vk(2,:)=Vin(2,:).*syscos-Vkcos(2,:).*syssin;
+Vk(3,:)=Vin(3,:).*syscos-Vkcos(3,:).*syssin;
+myplotgraph(Vk,2);
+
+%% Calculating average voltage ( for original and modified algo)
+[Avg_volt] = avgvolt(Vk,Nc);
+myplotgraph(Avg_volt,3);
+% plot of  Schmitt comparing voltage
+
+
+%% Applying full-cycle DFT on signals
+[cos_DFT_Vk,sin_DFT_Vk] = recdft(Vk,Nc);
+DFT_Vk  = sin_DFT_Vk +j*cos_DFT_Vk;
+[cos_DFT_avg,sin_DFT_avg] = recdft(Avg_volt,Nc);
+DFT_avg = sin_DFT_avg+j*cos_DFT_avg;
+
+%% Calculating positive sequence voltages on signals
+[Vk_pos,Vm]   =  seqcomp(DFT_Vk);
+[avg_pos,Fm]  =  seqcomp(DFT_avg);
+myplotgraph(Vm/10,5,'k-');
+myplotgraph(Fm,5,'k--');
+legend('Vm/10','Fm');
+
+%% Finding frequency of our original algo
+[sdelta_f,flag,ratio]= sincfreq(Fm,Vm,Vk,Avg_volt,Vschmitt,cycles);
+system_freq = F0 + sdelta_f;
+%myplotgraph(system_freq,7,'r');
+myplotgraph(system_freq,6,'k-');
+
+% We can use approximation method(deltafreq = F0*Fm/(Vm+Fm)))instead of the
+% inverse sinc table. But an error of >0.1 Hz is observed for freq> 52 Hz.
+
+%% Notes on disadvantage of original algo:
+% Here we r using original signal to calculate average signal.
+% But original signal contains noise, harmonics, dc components. Thus,
+% these r reflected in average signal, and hence, using this Avg_volt and
+% Vk for comparision in Schmitt trigger makes the system unreliable.
+% Therefore our algo is modified such that Schmitt trigger uses cleaner 
+% signals for comparision.
+% The cleaner signals are nothing but Vk_pos and avg_pos  !!!!!!!!1
+
+%% Notes for modified algo:
+% Vk_pos and avg_pos that we obtain on applying +ve seq component 
+% extraction are rotating with freq delta_f. We multiply each by 
+% e^(j*2*pi*F0/Fs*SampleNum). Thus our newVk_pos and newavg_pos are 
+% rotating with (F0+delta_f)
+% Scmmitt trigger uses these clean signals for comparision 
+
+newVk_pos   =   zeros(3,inputvolt_length);
+newavg_pos  =   zeros(3,inputvolt_length);
+expon=exp(j*2*pi*F0/cycles*time_stamp);
+expo=[expon;expon;expon];  
+newVk_pos   =  Vk_pos.*expo;
+newavg_pos  = avg_pos.*expo;
+
+% Take imag part or real part of newVk_pos or newavg_pos, choice is yours!
+% [h] =myplotgraph(imag(newVk_pos),8);
+% title('newVk');
+% ylabel('new Voltage');
+% %saving figures
+% disp('Saving figure 8... new voltage');
+% saveas(h,'data/newVk_pos.fig');
+% saveas(h,'data/newVk_pos.eps');
+% 
+% [h] =myplotgraph(imag(newavg_pos),9);
+% title('new average');
+% ylabel('new average');
+% %saving figures
+% disp('Saving figure 9... new average voltage');
+% saveas(h,'data/newavg_pos.fig');
+% saveas(h,'data/newavg_pos.eps');
+
+% plot of  Schmitt comparing voltages of modified algo
+myplotgraph(imag(newVk_pos(2,:))/10,8,'k-');
+myplotgraph(imag(newavg_pos(2,:)),8,'k--');
+myplotgraph(Vth/10*2/3,8,'k-.');
+myplotgraph(-Vth/10*2/3,8,'k-.');
+legend('newVk/10' ,'newAvgvolt', 'Vth/10*2/3')
+% Fm and Vm have been calculated using sequence components.
+
+%% Finding the frequency of modified algo
+[newsdelta_f,sflag,ratio2]= sincfreq(Fm,Vm,imag(newVk_pos),...
+                            imag(newavg_pos),Vschmitt,cycles);
+newssystem_freq = F0 + newsdelta_f;
+% myplotgraph(newssystem_freq,10,'k');
+myplotgraph(newssystem_freq,6,'k--');
+%% Phadke Thorp implementation
+[pfreq] = phadke_thorp(Vk_pos);
+% myplotgraph(pfreq,11,'g');
+myplotgraph(pfreq,6,'k-.');
+
+%% Notes on Phadke-Thorp
+% Phadke-Thorp fails to estimate frequency between 49.5 Hz to 50.5 Hz
+% One option is to display the previously estimated frequency.   
+% Another option is to display 50Hz. ( since the bag of +/- 0.5 rad not 
+% filled essentially means that the frequency is equal to or nearly 50Hz)
+% Another option is to reduce the bag size from 0.5 rad to say 0.1 rad. 
+% Another option is to calculate the frequency from the formula directly 
+% without checking the condition of the +/- 0.5 rad fill.We have 
+% implemented this option.
+% Also, in the earlier implementation of Phadke Thorp in QNX, the array of 
+% Xhidiff[] values can hold any number of rad samples upto MAXBUFFER ( not 
+% limited to 500 samples as was the earlier implementation in QNX ). 
+
+%% ZCD implementation
+[zcd_freq]=zcdfreq(Vin);
+% myplotgraph(zcd_freq,12,'b');
+myplotgraph(zcd_freq,6,'k:');
+
+%% Notes on ZCD implementation
+% Clearly, from the graph, the ZCD cannot be applied for system with
+% harmonics. It would be appropriate to apply ZCD on imag or real part of 
+% Vk_pos 
+
+%% Phase Locked Loop implementation
+%inputdata=[time_stamp' Vin'./220];
+%sim('p3ph_pll');
+% myplotgraph(pllf',13,'m');
+%myplotgraph(pllf',6,'m');
+title('Frequency versus Time');
+ylabel('Frequency');
+legend('Input frequency','Proposed Method','Modified Algo','Phadke-Thorp','Zero crossing detector','Location','NorthWest');
+ 
+%saving figures
+saveas(h,'data/allmethods.fig');
+saveas(h,'data/allmethods.eps');       
+disp('Saving figure 6 all freq...');
+
+%% Notes on PLL implementation
+% Initial latching time is high and depends upon sampling rate
+% Higher the sampling rate , faster the latching.
+
+%======================================================================
+%%                               K estimation
+%======================================================================
+
+% Here, too, original signal is used in the Schmitt trigger in the 
+% original k estimation method.
+% Our modified algorithm will use kVk_pos and kavg_pos instead
+
+%% k system generation
+[kVk]                   = newkval(newVk_pos);
+% delay = N samples
+myplotgraph(real(kVk),15,'k-');
+
+%% k Avg
+[kAvg_volt]             = avgvolt(kVk,kNc);
+myplotgraph(real(kAvg_volt),16,'k-');
+
+% plot of  Schmitt comparing voltages for k
+myplotgraph(real(kVk(2,:))/100,19,'k-');
+myplotgraph(real(kAvg_volt(2,:)),19,'k--');
+Vth(round(time_stamp*Fs)) = kVschmitt;
+myplotgraph(Vth/100,19,'k-.');
+myplotgraph(-Vth/100,19,'k-.');
+
+
+kVm=sqrt((1/3)*(sum(kVk.*conj(kVk),1)));
+kFm=sqrt((1/3)*(sum(kAvg_volt.*conj(kAvg_volt),1)));
+ 
+myplotgraph(kVm/100,17,'k-');
+myplotgraph(kFm,17,'k--');
+
+%% delta_f for k
+[kdelta_f,kflag,kratio] = sincfreq(kFm,kVm,real(kVk),...
+                          real(kAvg_volt),kVschmitt,kcycles);
+% kdelta_f is kvalue*delay   where delay = (-N/Fs) seconds
+kvalue  = kdelta_f*(-Fs/N);
+myplotgraph(kvalue,18,'k-');
+
+% 
+% newkVk_pos=zeros(3,inputvolt_length);
+% newkavg_pos=zeros(3,inputvolt_length);
+% for p=1:3,
+%     for n =1:inputvolt_length
+%     newkVk_pos(p,n)=kVk_pos(p,n)*exp(j*(2*pi*F0/Fs*n));
+%     end
+% end
+% for p=1:3,
+%     for n =1:inputvolt_length
+%     newkavg_pos(p,n)=kavg_pos(p,n)*exp(j*(2*pi*F0/Fs*n));
+%     end
+% end
+% Take imag part or real part of newVk_pos or newavg_pos, choice is yours!
+% [h] =myplotgraph(imag(newkVk_pos),19);
+% title('new imag(kVk_pos)');
+% ylabel('new kVoltage magnitude');
+% %saving figures
+% disp('Saving figure 19... new kVk');
+% saveas(h,'data/newkVk_pos.fig');
+% saveas(h,'data/newkVk_pos.eps');
+% 
+% [h] =myplotgraph(imag(newkavg_pos),20);
+% title('new k avg');
+% ylabel('new avg Voltage');
+% %saving figures
+% disp('Saving figure 20...new kavg');
+% saveas(h,'data/newkavg_pos.fig');
+% saveas(h,'data/newkavg_pos.eps');
+% 
+% % kFm and kVm have been calculated using sequence components.
+% myplotgraph(imag(newkVk_pos(2,:)/100),21,'r');
+% hold on;myplotgraph(imag(newkavg_pos(2,:)),21,'b');
+% title('imag(newkVk-pos(2,:)/ 100 and imag(newkavg-pos(2,:) graph');
+% 
+% %% Finding the new k value modified k algo
+% [newkdelta_f,newkflag]= sincfreq(kFm,kVm,imag(newkVk_pos),...
+%                         imag(newkavg_pos),kVschmitt,kcycles);
+% newkvalue = newkdelta_f*(-Fs/Nk);
+% [h] =myplotgraph(newkvalue,22);
+% title(' new k=df/dt value plot');
+% ylabel('Rate Hz/sec');
+% disp('Saving figure 22... new k value');
+% saveas(h,'data/newkvalue.fig');
+% saveas(h,'data/newkvalue.eps');
+
+ 
+% %FFT of the signal....
+% NN=2^ceil(log2(inputvolt_length));
+% y=fft(Vk(2,:),NN);
+% y1=abs(y);
+% y1=fftshift(y1);
+
+% figure(23); [h] = plot(f1,y1);
+%  title('FFT plot');
+%  ylabel('abs Magnitude');
+%  xlabel('Frequency');
+% disp('Saving figure 23... FFT plot');
+% saveas(h,'data/fft.fig');
+% saveas(h,'data/fft.eps');
+ 
+% %FFT of the k signal....
+% y=fft(real(kVk(2,:)),NN);
+% y1=abs(y);
+% y1=fftshift(y1);
+% f1= [-NN/2 : NN/2-1 ]/NN*Fs;
+ 
+% figure(24); [h] = plot(f1,y1);
+%  title('k FFT plot');
+%  ylabel('abs k  Magnitude');
+%  xlabel('Frequency');
+% disp('Saving figure 24... k FFT');
+% saveas(h,'data/kfft.fig');
+% saveas(h,'data/kfft.eps');
+
+% kvalue_avg = avgvalue(kvalue,kNc);
+% [h]= myplotgraph(kvalue_avg,26,'r');
+% title('avgvalue newk 0ver kNc cycles');
+% ylabel('avg Hz/sec');
+% disp('Saving figure 26... avg kvalue');
+% saveas(h,'data/avgvaluek.fig');
+% saveas(h,'data/avgvaluek.eps');
+% [h] =   myplotgraph(kvalue_avg,18,'b');
+% legend('kvalue','avgkvalue');
+%% Other Plots required for paper
+array=-200:200;
+figure(21);plot(array,sinc(array/50),'k');grid on;
+title('Plot of sinc(fT_0)');
+xlabel('Frequency (Hz)');
+ylabel('Fm/Vm');
+
+figure(22);plot(array,abs(sinc(array/50)),'k');grid on;
+title('Plot of absolute value of sinc(fT_0)');
+xlabel('Frequency (Hz)');
+ylabel('|Fm/Vm|');
+
+figure(23);plot(array,sinc(1*array/50),'k-');grid on;
+hold on;plot(array,sinc(2*array/50),'k--');
+plot(array,sinc(3*array/50),'k-.');
+plot(array,sinc(4*array/50),'k:');
+title('Freq. resp. to multiple integration periods');
+xlabel('Frequency (Hz)');
+ylabel('Fm/Vm');
+
+figure(24);plot(array,sinc(1/50*(array -(1-1/1)*50)),'k-');grid on;
+hold on;plot(array,sinc(2/50*(array -(1-1/2)*50)),'k--');
+plot(array,sinc(3/50*(array -(1-1/3)*50)),'k-.');
+plot(array,sinc(4/50*(array -(1-1/4)*50)),'k:');
+title('Frequency response to multiple integration periods');
+xlabel('Frequency (Hz)');
+ylabel('Fm/Vm');
+
+% plot of Scmitt comparing voltages
+myplotgraph(Vk(2,:),4,'k-');
+myplotgraph(Avg_volt(2,:),4,'k--');
+Vth(1:inputvolt_length) = Vschmitt;
+myplotgraph(flag,4,'k-.');
+myplotgraph(-Vth,4,'k-.');
+legend('Vk' ,'Avgvolt', 'Scm');
+%saving workspace
+%disp('Saving Workspace...');
+%save -MAT 'data/workspace.mat'
+

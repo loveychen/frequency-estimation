@@ -1,0 +1,264 @@
+\section{RESULTS AND COMPARISONS}
+In this section, results for the algorithm for MBPS computation as well as maximum independent minimal BPS computation will be discussed.
+First we show the results for MBPS computation.
+\subsection{RESULTS FOR MBPS COMPUTATION}
+For evaluating the performance of the proposed algorithm, an efficient code for ILP was written in JAVA which was tailored for solving sparse systems. Diagrams for various systems are shown in figures 5-11.
+ Results for the various test systems are shown in tables II-IX. The proposed algorithm was compared vis-a-vis many other known algorithms and it was found that the proposed algorithm outperformed each of these methods.
+\subsubsection{5 bus system}
+The 5 node system which is discussed in \cite{EPRI1}  is shown in fig~\ref{fig:demosystem}. Results with the proposed algorithm and other algorithms available in literature is shown in
+table~\ref{tab:res1}. It can be seen that other than the method
+discussed in \cite{EPRI1}, every other method led to the optimum answer. \emph{In this case, the dual simplex method provided an integral
+solution to the relaxed LP without adding any more constraints}. The MBPS obtained by the proposed approached is indicated in fig~\ref{fig:demosystem} (blackened relays).
+\begin{figure}
+{\centering
+{\includegraphics[scale=0.6]{epri5bus}\\
+\caption{Example five bus system}
+\label{fig:demosystem}
+}
+}
+\end{figure}
+\begin{table}
+\caption{Results for the 5-bus system shown in fig~\ref{fig:demosystem}}
+\begin{center}
+\begin{tabular}{|c||c|}
+\hline
+Algorithm&Cardinality of BPS\\
+\hline
+\hline
+Proposed Algorithm&\textbf{4}  \\
+Algorithm in \cite{ade}&4  \\
+Algorithm in \cite{EPRI1}&6  \\
+Algorithm in \cite{chinese}&4  \\
+\hline
+\end{tabular}
+\end{center}
+\label{tab:res1}
+\end{table} 
+
+\subsubsection{6 bus system}
+The 6 node system discussed in \cite{EPRI1} is shown in fig~\ref{fig:demosys2}. In this case, each of the methods led to the optimum answer which is shown in table~\ref{tab:res2}. 
+\emph{As in the previous case, here also the answer to the relaxed LP came out to be integral}. The MBPS obtained by the proposed algorithm is marked (blackened relays) in fig~\ref{fig:demosys2}.
+\begin{figure}
+{\centering
+{\includegraphics[scale=0.6]{epri6bus}\\
+\caption{Example six bus
+system}
+\label{fig:demosys2}}
+}
+\end{figure}
+\begin{table}
+\caption{Results for the 6-bus system shown in fig~\ref{fig:demosys2}}
+\begin{center}
+\begin{tabular}{|c||c|}
+\hline
+Algorithm&Cardinality of BPS\\
+\hline
+\hline
+Proposed Algorithm&\textbf{3}  \\
+Algorithm in \cite{ade}&3  \\
+Algorithm in \cite{EPRI1}&3  \\
+Algorithm in \cite{chinese}&3  \\
+\hline
+\end{tabular}
+\end{center}
+\label{tab:res2}
+\end{table}
+
+\subsubsection{5 bus symmetric system}
+The system is shown in fig~\ref{fig:symm}. The results are shown in table~\ref{tab:symmsys}. It can be seen that the proposed algorithm performs much
+better than the algorithm in \cite{chinese}. \emph{Again here, the solution to the relaxed LP converged to an integer}. The blackened relays in fig~\ref{fig:symm}
+indicate the MBPS obtained by the proposed approach. Notice that the relay on edge EC which is facing away from E has to be coordinated
+with the relay on edge AB which is facing away from B. This shows that relays in MBPS can have interdependency among them.
+\begin{figure}
+{\centering
+{\includegraphics[scale=0.6]{symm}\\
+\caption{Symmetric 5 bus system}
+\label{fig:symm}}
+}
+\end{figure}
+\begin{table}
+\caption{Results for the 5-node symmetric system shown in fig~\ref{fig:symm}}
+\begin{center}
+\begin{tabular}{|c||c|}
+\hline
+Algorithm&Cardinality of BPS\\
+\hline
+\hline
+Proposed Algorithm&\textbf{6}  \\
+Algorithm in \cite{ade}&7  \\
+Algorithm in \cite{EPRI1}&6  \\
+Algorithm in \cite{chinese}&11  \\
+\hline
+\end{tabular}
+\end{center}
+\label{tab:symmsys}
+\end{table}
+
+\subsubsection{IEEE 14 bus system}
+The IEEE 14 bus system is shown in fig~\ref{fig:14bus}. The results are summarized in table~\ref{tab:14bussys}. It can be seen here that the proposed algorithm
+was the only one which gave the optimum answer. \emph{As has been in the previous cases, the solution to the relaxed LP converged to an integer
+without adding any more constraint}. It was found out that there are directed loops in the system in which more than one relay from the MBPS participate. This indicates that 
+there is interdependency among the relays in the MBPS.
+
+\begin{figure}
+{\centering
+{\includegraphics[scale=0.35]{14bus}\\
+\caption{IEEE 14 bus system}
+\label{fig:14bus}}
+}
+\end{figure}
+
+\begin{table}
+\caption{Results for the IEEE-14 bus system shown in fig~\ref{fig:14bus}}
+\begin{center}
+\begin{tabular}{|c||c|}
+\hline
+Algorithm&Cardinality of BPS\\
+\hline
+\hline
+Proposed Algorithm&\textbf{9}  \\
+Algorithm in \cite{ade}&10  \\
+Algorithm in \cite{EPRI1}&10  \\
+Algorithm in \cite{chinese}&20  \\
+\hline
+\end{tabular}
+\end{center}
+\label{tab:14bussys}
+\end{table}
+
+\subsubsection{IEEE 30 bus system}
+The IEEE 30 bus system is shown fig~\ref{fig:30bus}. The results are shown in table~\ref{tab:30bussys}. \emph{The dual simplex method again gave an integral solution to the relaxed LP},
+without adding any more constraint. Again, considerable amount of interdependency was observed among the relays in the MBPS.
+\begin{figure*}
+{\centering
+{\includegraphics[scale=0.60]{IEEE_30_bus}\\
+\caption{IEEE 30 bus system}
+\label{fig:30bus}}
+}
+\end{figure*}
+\begin{table}
+\caption{Results for the IEEE-30 bus system shown in fig~\ref{fig:30bus}}
+\begin{center}
+\begin{tabular}{|c||c|}
+\hline
+Algorithm&Cardinality of BPS\\
+\hline
+\hline
+Proposed Algorithm&\textbf{16}  \\
+Algorithm in \cite{ade}&17  \\
+Algorithm in \cite{EPRI1}&16  \\
+Algorithm in \cite{chinese}&36  \\
+\hline
+\end{tabular}
+\end{center}
+\label{tab:30bussys}
+\end{table}
+
+\subsubsection{Indian Utility System}
+The Indian utility system is shown in fig~\ref{fig:indian}. It has 9 buses, 20 lines and 1190 directed loops.
+The results are shown in table~\ref{tab:indiansys}. \emph{For this system also, the solution to the relaxed LP was integral}.
+As in the previous cases, there were relays in the MBPS whose settings need to be coordinated with
+those of other relays in the MBPS.
+\begin{figure}
+{\centering
+{\includegraphics[scale=0.34]{indian}\\
+\caption{Indian Utility System}
+\label{fig:indian}}
+}
+\end{figure}
+\begin{table}
+\caption{Results for the Indian Utility System shown in fig~\ref{fig:indian}}
+\begin{center}
+\begin{tabular}{|c||c|}
+\hline
+Algorithm&Cardinality of BPS\\
+\hline
+\hline
+Proposed Algorithm&\textbf{19}  \\
+Algorithm in \cite{ade}&19  \\
+Algorithm in \cite{EPRI1}&20  \\
+Algorithm in \cite{chinese}&26  \\
+\hline
+\end{tabular}
+\end{center}
+\label{tab:indiansys}
+\end{table}
+
+\subsubsection{Western Power Grid 400-kV in India}
+The 400-kV Western power grid in India is a  large system which is shown in fig~\ref{fig:western}. The term `large' is used here to emphasize on the fact that the number of simple loops
+blows out. This is because the system has 49 fundamental loops. It implies that enumeration of all possible loops will require computation of $2^{49}$ linear combinations of the fundamental loops. This number is of the order of $10^{14}$ and hence enumeration of loops is computationally intractable. The system has 52 buses and 100 lines. There are 5 states in this grid namely Maharashtra, Madhya Pradesh, Chattisgarh, Gujarat and Goa. The number of buses and lines in each of states is indicated in table \ref{tab:indi}. The remaining 15 edges are interconnections between various states.
+The MBPS of the networks in different states were individually found out and then relays were augmented to the reduced break point set, as explained in Approach 1, \mbox{Section V}. The results for the system is indicated in table \ref{tab:western}. The minimal BPS was obtained by augmenting  MBPS of each  state with the minimal BPS on the interconnections and its cardinality was found out to be 72. It was found out that even if the BPS algorithm is run with the states as `supernodes' and the interconnections between them as lines (approach 2), then also the BPS to be augmented had cardinality equal to 15. This is equal to the number of interconnections. The lower bound for MBPS is 50, while the upper bound is 98. The upper and the lower bound on MBPS in terms of the number of fundamental loops is
+established in \cite{vcp3}. \emph{It comes as a nice surprise,
+that even in such a large system, the relaxed LP for each of states had an integral solution and the Dual-Simplex method converged to the same for each of them. }
+
+It was observed that for the large systems of Maharashtra and Madhya Pradesh, there was significant interdependency among the relays in the MBPS.
+The MBPS for Gujarat had no interdependency while that for Chattisgarh had a very small interdependency. The system for Goa being trivial, had no
+ MBPS. As a result, the system of Goa had no interdependency. 
+
+\begin{figure*}
+{\centering
+{\includegraphics[scale=0.60]{wreb}\\
+\caption{Western Power Grid-400kV}
+\label{fig:western}}
+}
+\end{figure*}
+\begin{table}
+\caption{Number of buses and lines in each state in the 400-kV grid in Western India}
+\begin{center}
+\begin{tabular}{|c||c||c|}
+\hline
+Name of State&Buses&lines\\
+\hline
+\hline
+Maharashtra&22&36\\
+Madhya Pradesh&12&26\\
+Gujarat&13&15\\
+Chattisgarh&4&8\\
+Goa&1&0\\
+\hline
+\end{tabular}
+\end{center}
+\label{tab:indi}
+\end{table}
+
+\begin{table}
+\caption{BPS for Western Power Grid in India}
+\begin{center}
+\begin{tabular}{|c||c|}
+\hline
+Name of the state&Break Point Set\\
+\hline
+\hline
+Chattisgarh&7 \\
+Gujarat&4  \\
+Maharashtra&25 \\
+Madhya Pradesh&23 \\
+\hline
+\hline
+Names of the Two states&Break points on edges between them \\
+\hline
+Madhya Pradesh, Gujarat&2 \\
+Madhya Pradesh, Chattisgarh&2\\
+Madhya Pradesh, Maharashtra&3\\
+Gujarat, Maharashtra&3\\
+Maharashtra, Chattisgarh&3\\ 
+Goa, Maharashtra&2\\  
+\hline
+\hline 
+Total break points&\textbf{72}\\
+\hline
+\end{tabular}
+\end{center}
+\label{tab:western}
+\end{table}
+
+\subsection{RESULTS FOR MAXIMUM INDEPENDENT MINIMAL BPS COMPUTATION}
+An efficient JAVA code was written for computation of maximum independent minimal BPS.
+The test systems considered are same as those considered for computation of MBPS.
+\emph{For each of the systems considered, it was found out that the cardinality of the maximum independent minimal
+BPS was same as that of the MBPS.} Also, in each case, it was observed
+ that the maximum independent minimal BPS corresponds to one of the MBPS. Similarly, for each of the test cases, the solution to the relaxed LP
+converged directly to an integral solution.  
+
+
+

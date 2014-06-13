@@ -1,0 +1,6 @@
+We propose an Integer Linear Programming (ILP) formulation for the minimum relay Break Point Set (BPS) computation. Subsequently, in the ILP framework, we propose an alternate
+maximum independent relay BPS formulation with the intention of minimizing dependency within the BPS. We show that 1)
+in practice, the relaxed version of the ILP suffices to obtain integral vertex and 2) the relaxed version of 
+the ILP can be efficiently solved by the Dual-Simplex method.  The performance of the proposed algorithm is compared
+and contrasted with existing algorithms. Case studies on various test systems show the efficacy of the
+proposed approach. 

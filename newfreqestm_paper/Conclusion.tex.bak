@@ -1,0 +1,21 @@
+\section{CONCLUSIONS}
+In this paper, we have addressed two problems in optimal BPS computation.
+\begin{itemize}
+\item Computation of minimum BPS.
+\item Computation of maximum independent minimal BPS.
+\end{itemize}
+The problem
+of computing maximum independent minimal BPS is posed for the first time in this paper. Further,
+we have proposed a generic ILP formulation for optimal BPS computation. Some of the salient features
+of this work are:
+\begin{itemize}
+\item ILP formulation provides an efficient approach to computation of optimal BPS. This is because
+more often than not, the relaxed LP formulation directly leads to an integral vertex.
+\item ILP approach can model the phantom buses and relays with ease.
+\item Conceptually, it is more worthwhile to look for maximum independent minimal BPS rather than MBPS. Fortunately, it is found that often one of the multiple MBPS also corresponds to a maximum independent
+minimal BPS.
+\item The paper provides an insightful and detailed investigation of the BPS problem from a graph theoretic perspective.
+\end{itemize}
+Further, a decomposition approach was developed for large scale systems. This led to a  good approximation to the optimal BPS problem. Comparison with other methods
+in literature demonstrate the efficacy of the proposed approach.
+

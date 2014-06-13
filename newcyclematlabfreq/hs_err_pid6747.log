@@ -1,0 +1,259 @@
+
+An unexpected exception has been detected in native code outside the VM.
+Unexpected Signal : 11 occurred at PC=0x2a91742
+Function name=(N/A)
+Library=/usr/local/matlab/bin/glnx86/libmwuix.so
+
+NOTE: We are unable to locate the function name symbol for the error
+      just occurred. Please refer to release documentation for possible
+      reason and solutions.
+
+
+
+Current Java thread:
+	at com.mathworks.jmi.NativeMatlab.disableMatlabWindows(Native Method)
+	at com.mathworks.jmi.Matlab$DisableMatlabWindows.run(Matlab.java:2351)
+	at com.mathworks.jmi.MatlabLooper.dispatchMTRequests(MatlabLooper.java:407)
+
+Dynamic libraries:
+00111000-00118000 r-xp 00000000 08:09 455751     /usr/local/matlab/bin/glnx86/libmex.so
+00118000-00119000 rwxp 00006000 08:09 455751     /usr/local/matlab/bin/glnx86/libmex.so
+00119000-00174000 r-xp 00000000 08:09 455786     /usr/local/matlab/bin/glnx86/libmwm_ir.so
+00174000-001a1000 rwxp 0005a000 08:09 455786     /usr/local/matlab/bin/glnx86/libmwm_ir.so
+001a4000-00204000 r-xp 00000000 08:09 455801     /usr/local/matlab/bin/glnx86/libmwnumerics.so
+00204000-00209000 rwxp 0005f000 08:09 455801     /usr/local/matlab/bin/glnx86/libmwnumerics.so
+00209000-00231000 r-xp 00000000 08:09 455772     /usr/local/matlab/bin/glnx86/libmwhardcopy.so
+00231000-00236000 rwxp 00027000 08:09 455772     /usr/local/matlab/bin/glnx86/libmwhardcopy.so
+00237000-0023d000 r-xp 00000000 08:09 455768     /usr/local/matlab/bin/glnx86/libmwglee.so
+0023d000-00240000 rwxp 00005000 08:09 455768     /usr/local/matlab/bin/glnx86/libmwglee.so
+00242000-00245000 r-xp 00000000 08:09 911522     /usr/local/matlab/sys/os/glnx86/libtermcap.so
+00245000-00246000 rwxp 00002000 08:09 911522     /usr/local/matlab/sys/os/glnx86/libtermcap.so
+00246000-0024f000 r-xp 00000000 08:09 2963282    /usr/lib/libXcursor.so.1.0.2
+0024f000-00250000 rwxp 00008000 08:09 2963282    /usr/lib/libXcursor.so.1.0.2
+00250000-00258000 r-xp 00000000 08:09 2963273    /usr/lib/libXrender.so.1.3.0
+00258000-00259000 rwxp 00007000 08:09 2963273    /usr/lib/libXrender.so.1.3.0
+00259000-0025d000 r-xp 00000000 08:09 2963281    /usr/lib/libXfixes.so.3.1.0
+0025d000-0025e000 rwxp 00003000 08:09 2963281    /usr/lib/libXfixes.so.3.1.0
+0025e000-00260000 r-xs 00000000 08:09 915660     /usr/local/matlab/java/jar/xml.jar
+00260000-00261000 r-xs 00000000 08:09 915680     /usr/local/matlab/java/jarext/ice/ib5xalan.jar
+00262000-00265000 r-xp 00000000 08:09 650891     /lib/libdl-2.6.so
+00265000-00266000 r-xp 00002000 08:09 650891     /lib/libdl-2.6.so
+00266000-00267000 rwxp 00003000 08:09 650891     /lib/libdl-2.6.so
+0026a000-0026c000 r-xp 00000000 08:09 2963270    /usr/lib/libXau.so.6.0.0
+0026c000-0026d000 rwxp 00001000 08:09 2963270    /usr/lib/libXau.so.6.0.0
+00271000-0034d000 r-xp 00000000 08:09 455784     /usr/local/matlab/bin/glnx86/libmwm_interpreter.so
+0034d000-00372000 rwxp 000db000 08:09 455784     /usr/local/matlab/bin/glnx86/libmwm_interpreter.so
+0038d000-003b9000 r-xp 00000000 08:09 455757     /usr/local/matlab/bin/glnx86/libmwbuiltins.so
+003b9000-003bd000 rwxp 0002b000 08:09 455757     /usr/local/matlab/bin/glnx86/libmwbuiltins.so
+003bd000-003c4000 r-xp 00000000 08:09 2964532    /usr/lib/libXp.so.6.2.0
+003c4000-003c5000 rwxp 00007000 08:09 2964532    /usr/lib/libXp.so.6.2.0
+003c6000-003c8000 rwxs f8ad8000 00:10 8478       /dev/dri/card0
+003c9000-003cd000 r-xp 00000000 08:09 455782     /usr/local/matlab/bin/glnx86/libmwm_dispatcher.so
+003cd000-003cf000 rwxp 00003000 08:09 455782     /usr/local/matlab/bin/glnx86/libmwm_dispatcher.so
+003cf000-003de000 r-xp 00000000 08:09 2963277    /usr/lib/libXext.so.6.4.0
+003de000-003df000 rwxp 0000e000 08:09 2963277    /usr/lib/libXext.so.6.4.0
+003df000-0041a000 r-xp 00000000 08:09 455828     /usr/local/matlab/bin/glnx86/libut.so
+0041a000-0041d000 rwxp 0003a000 08:09 455828     /usr/local/matlab/bin/glnx86/libut.so
+004a8000-004bc000 r-xp 00000000 08:09 650919     /lib/libpthread-2.6.so
+004bc000-004bd000 r-xp 00013000 08:09 650919     /lib/libpthread-2.6.so
+004bd000-004be000 rwxp 00014000 08:09 650919     /lib/libpthread-2.6.so
+004c0000-004d8000 r-xp 00000000 08:09 455780     /usr/local/matlab/bin/glnx86/libmwlapack.so
+004d8000-004db000 rwxp 00017000 08:09 455780     /usr/local/matlab/bin/glnx86/libmwlapack.so
+004dd000-004e6000 r-xp 00000000 08:09 455746     /usr/local/matlab/bin/glnx86/libmat.so
+004e6000-004e7000 rwxp 00008000 08:09 455746     /usr/local/matlab/bin/glnx86/libmat.so
+004e7000-004ef000 r-xp 00000000 08:09 2963287    /usr/lib/libSM.so.6.0.0
+004ef000-004f0000 rwxp 00007000 08:09 2963287    /usr/lib/libSM.so.6.0.0
+004f0000-004f5000 r-xp 00000000 08:09 2963271    /usr/lib/libXdmcp.so.6.0.0
+004f5000-004f6000 rwxp 00004000 08:09 2963271    /usr/lib/libXdmcp.so.6.0.0
+004f6000-004fb000 r-xs 00000000 08:09 915659     /usr/local/matlab/java/jar/widgets.jar
+004fb000-00500000 r-xs 00000000 08:09 915652     /usr/local/matlab/java/jar/timer.jar
+00501000-0053c000 r-xp 00000000 08:09 455778     /usr/local/matlab/bin/glnx86/libmwjmi.so
+0053c000-00542000 rwxp 0003a000 08:09 455778     /usr/local/matlab/bin/glnx86/libmwjmi.so
+00542000-00579000 r-xp 00000000 08:09 911520     /usr/local/matlab/sys/os/glnx86/libstdc++-libc6.1-2.so.3
+00579000-00585000 rwxp 00036000 08:09 911520     /usr/local/matlab/sys/os/glnx86/libstdc++-libc6.1-2.so.3
+00587000-00591000 r-xp 00000000 08:09 650931     /lib/libnss_files-2.6.so
+00591000-00592000 r-xp 00009000 08:09 650931     /lib/libnss_files-2.6.so
+00592000-00593000 rwxp 0000a000 08:09 650931     /lib/libnss_files-2.6.so
+00593000-005af000 r-xp 00000000 08:09 455797     /usr/local/matlab/bin/glnx86/libmwmlib.so
+005af000-0060b000 rwxp 0001b000 08:09 455797     /usr/local/matlab/bin/glnx86/libmwmlib.so
+0060b000-0067e000 r-xp 00000000 08:09 455816     /usr/local/matlab/bin/glnx86/libmwudd_mi.so
+0067e000-00692000 rwxp 00072000 08:09 455816     /usr/local/matlab/bin/glnx86/libmwudd_mi.so
+00693000-006aa000 r-xp 00000000 08:09 2963286    /usr/lib/libICE.so.6.3.0
+006aa000-006ab000 rwxp 00016000 08:09 2963286    /usr/lib/libICE.so.6.3.0
+006af000-006f1000 r-xp 00000000 08:09 455770     /usr/local/matlab/bin/glnx86/libmwgui.so
+006f1000-0072a000 rwxp 00041000 08:09 455770     /usr/local/matlab/bin/glnx86/libmwgui.so
+0072b000-0073d000 r-xp 00000000 08:09 1887571    /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i386/libverify.so
+0073d000-0073f000 rwxp 00011000 08:09 1887571    /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i386/libverify.so
+0073f000-00747000 r-xs 00000000 08:09 915651     /usr/local/matlab/java/jar/services.jar
+00747000-00749000 r-xp 00000000 08:09 553349     /usr/local/matlab/bin/glnx86/libnativejmi.so
+00749000-0074a000 rwxp 00001000 08:09 553349     /usr/local/matlab/bin/glnx86/libnativejmi.so
+0074a000-0075b000 r-xp 00000000 08:09 455794     /usr/local/matlab/bin/glnx86/libmwm_pcodeio.so
+0075b000-0075d000 rwxp 00010000 08:09 455794     /usr/local/matlab/bin/glnx86/libmwm_pcodeio.so
+0075d000-00784000 r-xp 00000000 08:09 650916     /lib/libm-2.6.so
+00784000-00785000 r-xp 00026000 08:09 650916     /lib/libm-2.6.so
+00785000-00786000 rwxp 00027000 08:09 650916     /lib/libm-2.6.so
+00786000-0078c000 r-xs 00000000 08:09 915658     /usr/local/matlab/java/jar/verctrl.jar
+0078f000-0079f000 r-xp 00000000 08:09 455776     /usr/local/matlab/bin/glnx86/libmwir_interp.so
+0079f000-007a3000 rwxp 0000f000 08:09 455776     /usr/local/matlab/bin/glnx86/libmwir_interp.so
+007a3000-007f7000 r-xp 00000000 08:09 455766     /usr/local/matlab/bin/glnx86/libmwfftw.so
+007f7000-007f9000 rwxp 00053000 08:09 455766     /usr/local/matlab/bin/glnx86/libmwfftw.so
+007f9000-0080e000 r-xp 00000000 08:09 1887572    /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i386/libzip.so
+0080e000-00811000 rwxp 00014000 08:09 1887572    /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i386/libzip.so
+00811000-00818000 r-xs 00000000 08:09 915663     /usr/local/matlab/java/jarext/audio.jar
+00819000-0082d000 r-xp 00000000 08:09 455792     /usr/local/matlab/bin/glnx86/libmwm_pcodegen.so
+0082d000-0082f000 rwxp 00013000 08:09 455792     /usr/local/matlab/bin/glnx86/libmwm_pcodegen.so
+0082f000-00854000 r-xp 00000000 08:09 455811     /usr/local/matlab/bin/glnx86/libmwsl_solver.so
+00854000-0085c000 rwxp 00024000 08:09 455811     /usr/local/matlab/bin/glnx86/libmwsl_solver.so
+0085e000-00871000 r-xp 00000000 08:09 455799     /usr/local/matlab/bin/glnx86/libmwmpath.so
+00871000-00872000 rwxp 00012000 08:09 455799     /usr/local/matlab/bin/glnx86/libmwmpath.so
+00875000-008de000 r-xp 00000000 08:09 455822     /usr/local/matlab/bin/glnx86/libmwumfpack.so
+008de000-008df000 rwxp 00068000 08:09 455822     /usr/local/matlab/bin/glnx86/libmwumfpack.so
+008df000-0094f000 r-xp 00000000 08:09 455759     /usr/local/matlab/bin/glnx86/libmwcg_ir.so
+0094f000-0095e000 rwxp 0006f000 08:09 455759     /usr/local/matlab/bin/glnx86/libmwcg_ir.so
+0095e000-0096b000 r-xs 00000000 08:09 915643     /usr/local/matlab/java/jar/hg.jar
+0096b000-00971000 r-xs 00000000 08:09 915668     /usr/local/matlab/java/jarext/gnu_regexp.jar
+00972000-00988000 r-xp 00000000 08:09 455763     /usr/local/matlab/bin/glnx86/libmwdastudio.so
+00988000-0098d000 rwxp 00015000 08:09 455763     /usr/local/matlab/bin/glnx86/libmwdastudio.so
+0098d000-009a3000 r-xs 00000000 08:09 878730     /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/sunrsasign.jar
+009a3000-009a8000 r-xp 00000000 08:09 2963486    /usr/lib/libXtst.so.6.1.0
+009a8000-009a9000 rwxp 00004000 08:09 2963486    /usr/lib/libXtst.so.6.1.0
+009a9000-009b4000 r-xp 00000000 08:09 2831332    /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i386/native_threads/libhpi.so
+009b4000-009b5000 rwxp 0000a000 08:09 2831332    /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i386/native_threads/libhpi.so
+009b5000-009b8000 r-xp 00000000 08:09 553338     /usr/local/matlab/bin/glnx86/libnativejava.so
+009b8000-009ba000 rwxp 00002000 08:09 553338     /usr/local/matlab/bin/glnx86/libnativejava.so
+009bb000-009eb000 r-xp 00000000 08:09 455824     /usr/local/matlab/bin/glnx86/libmx.so
+009eb000-009ed000 rwxp 0002f000 08:09 455824     /usr/local/matlab/bin/glnx86/libmx.so
+009ed000-009fc000 r-xs 00000000 08:09 915682     /usr/local/matlab/java/jarext/mwjava2specific.jar
+009fc000-00a0d000 r-xp 00000000 08:09 455806     /usr/local/matlab/bin/glnx86/libmwservices.so
+00a0d000-00a11000 rwxp 00010000 08:09 455806     /usr/local/matlab/bin/glnx86/libmwservices.so
+00a19000-00a46000 r-xp 00000000 08:09 455744     /usr/local/matlab/bin/glnx86/libfixedpoint.so
+00a46000-00a48000 rwxp 0002c000 08:09 455744     /usr/local/matlab/bin/glnx86/libfixedpoint.so
+00a49000-00a6c000 r-xp 00000000 08:09 1887561    /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i386/libjava.so
+00a6c000-00a6e000 rwxp 00022000 08:09 1887561    /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i386/libjava.so
+00a6f000-00a80000 r-xs 00000000 08:09 915656     /usr/local/matlab/java/jar/toolbox/rptgencore.jar
+00a82000-00a83000 r-xp 00a82000 00:00 0          [vdso]
+00a83000-00b16000 r-xp 00000000 08:09 455813     /usr/local/matlab/bin/glnx86/libmwudd.so
+00b16000-00b3f000 rwxp 00092000 08:09 455813     /usr/local/matlab/bin/glnx86/libmwudd.so
+00b80000-00b99000 r-xs 00000000 08:09 915657     /usr/local/matlab/java/jar/util.jar
+00b9c000-00bb7000 r-xp 00000000 08:09 650883     /lib/ld-2.6.so
+00bb7000-00bb8000 r-xp 0001a000 08:09 650883     /lib/ld-2.6.so
+00bb8000-00bb9000 rwxp 0001b000 08:09 650883     /lib/ld-2.6.so
+00bb9000-00cd2000 r-xp 00000000 08:09 455774     /usr/local/matlab/bin/glnx86/libmwhg.so
+00cd2000-00d05000 rwxp 00118000 08:09 455774     /usr/local/matlab/bin/glnx86/libmwhg.so
+00d35000-00dd1000 r-xp 00000000 08:09 455790     /usr/local/matlab/bin/glnx86/libmwm_parser.so
+00dd1000-00ee7000 rwxp 0009b000 08:09 455790     /usr/local/matlab/bin/glnx86/libmwm_parser.so
+00ee7000-01381000 r-xp 00000000 08:09 455809     /usr/local/matlab/bin/glnx86/libmwsimulink.so
+01381000-0142d000 rwxp 00499000 08:09 455809     /usr/local/matlab/bin/glnx86/libmwsimulink.so
+01570000-0158c000 r-xs 00000000 08:09 915641     /usr/local/matlab/java/jar/beans.jar
+0158c000-01613000 r-xs 00000000 08:09 915644     /usr/local/matlab/java/jar/icebrowserbean.jar
+01613000-0162f000 r-xs 00000000 08:09 915647     /usr/local/matlab/java/jar/mlwidgets.jar
+0162f000-0163c000 r-xs 00000000 08:09 915676     /usr/local/matlab/java/jarext/ice/ib5ref.jar
+0163d000-01ab2000 r-xp 00000000 08:09 2896419    /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i386/server/libjvm.so
+01ab2000-01afc000 rwxp 00474000 08:09 2896419    /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i386/server/libjvm.so
+01b14000-01d14000 r-xp 00000000 08:09 2964712    /usr/lib/locale/locale-archive
+01d14000-01d2e000 r-xs 00000000 08:09 916061     /usr/local/matlab/java/jar/toolbox/images.jar
+01d2e000-01d37000 r-xs 00000000 08:09 915678     /usr/local/matlab/java/jarext/ice/ib5swing.jar
+01d37000-01d3e000 r-xs 00000000 08:09 3026838    /usr/lib/gconv/gconv-modules.cache
+01d7f000-02042000 r-xp 00000000 08:09 2017748    /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i386/client/libjvm.so
+02042000-02059000 rwxp 002c2000 08:09 2017748    /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i386/client/libjvm.so
+02071000-02316000 r-xs 00000000 08:09 878717     /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i18n.jar
+02316000-02348000 r-xs 00000000 08:09 915646     /usr/local/matlab/java/jar/jmi.jar
+02348000-02389000 r-xs 00000000 08:09 915648     /usr/local/matlab/java/jar/mwswing.jar
+02389000-0244e000 r-xs 00000000 08:09 915649     /usr/local/matlab/java/jar/mwt.jar
+0244e000-0245f000 r-xs 00000000 08:09 915674     /usr/local/matlab/java/jarext/ice/ib5https.jar
+0245f000-02463000 r-xp 00000000 08:09 915936     /usr/local/matlab/toolbox/matlab/datatypes/cellfun.mexglx
+02463000-02464000 rwxp 00003000 08:09 915936     /usr/local/matlab/toolbox/matlab/datatypes/cellfun.mexglx
+02466000-025ff000 r-xp 00000000 08:09 455738     /usr/local/matlab/bin/glnx86/lapack.so
+025ff000-02601000 rwxp 00198000 08:09 455738     /usr/local/matlab/bin/glnx86/lapack.so
+026c4000-02890000 r-xs 00000000 08:09 915645     /usr/local/matlab/java/jar/ide.jar
+02890000-02917000 r-xs 00000000 08:09 915650     /usr/local/matlab/java/jar/page.jar
+02917000-02953000 r-xs 00000000 08:09 916048     /usr/local/matlab/java/jar/toolbox/dastudio.jar
+02953000-029d9000 r-xs 00000000 08:09 916053     /usr/local/matlab/java/jar/toolbox/simulink.jar
+029d9000-02a20000 r-xs 00000000 08:09 915675     /usr/local/matlab/java/jarext/ice/ib5js.jar
+02a20000-02a35000 r-xs 00000000 08:09 915679     /usr/local/matlab/java/jarext/ice/ib5util.jar
+02a38000-02b33000 r-xp 00000000 08:09 455820     /usr/local/matlab/bin/glnx86/libmwuix.so
+02b33000-02b47000 rwxp 000fa000 08:09 455820     /usr/local/matlab/bin/glnx86/libmwuix.so
+03f4f000-03f6d000 r-xs 00000000 08:09 915677     /usr/local/matlab/java/jarext/ice/ib5ri.jar
+03f6d000-03f80000 r-xs 00000000 08:09 915685     /usr/local/matlab/java/jarext/vb20.jar
+03f80000-03f97000 r-xs 00000000 08:09 915687     /usr/local/matlab/java/jarext/windows.jar
+049c8000-04a41000 r-xs 00000000 08:09 915664     /usr/local/matlab/java/jarext/classes111.jar
+04a41000-04aaa000 r-xs 00000000 08:09 915669     /usr/local/matlab/java/jarext/ice/ib5core.jar
+04aaa000-04b43000 r-xs 00000000 08:09 915684     /usr/local/matlab/java/jarext/saxon.jar
+04b43000-04c21000 r-xs 00000000 08:09 915688     /usr/local/matlab/java/jarext/xalan.jar
+04c21000-04cb6000 r-xp 00000000 08:09 1887558    /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i386/libfontmanager.so
+04cb6000-04ce0000 rwxp 00094000 08:09 1887558    /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i386/libfontmanager.so
+04ce0000-04d00000 r-xp 00000000 08:09 455732     /usr/local/matlab/bin/glnx86/glren.so
+04d00000-04d03000 rwxp 0001f000 08:09 455732     /usr/local/matlab/bin/glnx86/glren.so
+04d03000-04d07000 r-xp 00000000 08:09 915934     /usr/local/matlab/toolbox/matlab/datafun/sortrowsc.mexglx
+04d07000-04d09000 rwxp 00003000 08:09 915934     /usr/local/matlab/toolbox/matlab/datafun/sortrowsc.mexglx
+04d09000-04d0d000 r-xp 00000000 08:09 915932     /usr/local/matlab/toolbox/matlab/datafun/sortcellchar.mexglx
+04d0d000-04d0f000 rwxp 00003000 08:09 915932     /usr/local/matlab/toolbox/matlab/datafun/sortcellchar.mexglx
+04d4f000-04ef6000 r-xs 00000000 08:09 915689     /usr/local/matlab/java/jarext/xercesImpl.jar
+04ef6000-04f5f000 r-xp 00000000 08:09 2963333    /usr/lib/libGL.so.1.2
+04f5f000-04f65000 rwxp 00069000 08:09 2963333    /usr/lib/libGL.so.1.2
+04f82000-04fa1000 r-xp 00000000 08:09 650918     /lib/libexpat.so.0.5.0
+04fa1000-04fa3000 rwxp 0001e000 08:09 650918     /lib/libexpat.so.0.5.0
+04fa3000-04fb9000 r-xp 00000000 08:09 651031     /lib/libselinux.so.1
+04fb9000-04fbb000 rwxp 00015000 08:09 651031     /lib/libselinux.so.1
+04fbb000-04ff6000 r-xp 00000000 08:09 651030     /lib/libsepol.so.1
+04ff6000-04ff7000 rwxp 0003b000 08:09 651030     /lib/libsepol.so.1
+0502f000-05d48000 r-xs 00000000 08:09 878729     /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/rt.jar
+05ddb000-05ebb000 r-xp 00000000 08:09 2963299    /usr/lib/libstdc++.so.6.0.8
+05ebb000-05ebe000 r-xp 000e0000 08:09 2963299    /usr/lib/libstdc++.so.6.0.8
+05ebe000-05ec0000 rwxp 000e3000 08:09 2963299    /usr/lib/libstdc++.so.6.0.8
+06063000-0606c000 r-xs 00000000 08:09 915672     /usr/local/matlab/java/jarext/ice/ib5extra.jar
+060b8000-060d3000 r-xs 00000000 08:09 915690     /usr/local/matlab/java/jarext/xml-apis.jar
+06173000-06184000 r-xs 00000000 08:09 915673     /usr/local/matlab/java/jarext/ice/ib5http.jar
+0619f000-061df000 r-xs 00000000 08:09 915665     /usr/local/matlab/java/jarext/collections.jar
+06393000-063b4000 r-xs 00000000 08:09 915671     /usr/local/matlab/java/jarext/ice/ib5crypto.jar
+063b4000-063fd000 r-xp 00000000 08:09 1887567    /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i386/libmlib_image.so
+063fd000-063ff000 rwxp 00048000 08:09 1887567    /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i386/libmlib_image.so
+06455000-065a3000 r-xp 00000000 08:09 650889     /lib/libc-2.6.so
+065a3000-065a5000 r-xp 0014e000 08:09 650889     /lib/libc-2.6.so
+065a5000-065a6000 rwxp 00150000 08:09 650889     /lib/libc-2.6.so
+0685f000-06b51000 r-xp 00000000 08:09 1887555    /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i386/libawt.so
+06b51000-06b61000 rwxp 002f1000 08:09 1887555    /usr/local/matlab/sys/java/jre/glnx86/jre1.3.1/lib/i386/libawt.so
+06d31000-06ec2000 r-xp 00000000 08:09 911517     /usr/local/matlab/sys/os/glnx86/libXm.so.2.1
+06ec2000-06ed6000 rwxp 00190000 08:09 911517     /usr/local/matlab/sys/os/glnx86/libXm.so.2.1
+070a8000-070c3000 r-xs 00000000 08:09 915683     /usr/local/matlab/java/jarext/mwucarunits.jar
+070c3000-072f7000 r-xp 00000000 08:09 292920     /usr/lib/dri/i915_dri.so
+072f7000-0730b000 rwxp 00234000 08:09 292920     /usr/lib/dri/i915_dri.so
+07455000-07462000 r-xs 00000000 08:09 915661     /usr/local/matlab/java/jarext/FTPProtocol.jar
+07477000-07485000 r-xs 00000000 08:09 915666     /usr/local/matlab/java/jarext/commapi/comm.jar
+07519000-0756d000 r-xp 00000000 08:09 2963311    /usr/lib/libXt.so.6.0.0
+0756d000-07571000 rwxp 00054000 08:09 2963311    /usr/lib/libXt.so.6.0.0
+075e0000-075f5000 r-xs 00000000 08:09 917186     /usr/local/matlab/java/jar/toolbox/nnet.jar
+0761c000-07634000 r-xs 00000000 08:09 915655     /usr/local/matlab/java/jar/toolbox/matlab.jar
+07658000-07673000 r-xs 00000000 08:09 916049     /usr/local/matlab/java/jar/toolbox/mdldisc.jar
+0790e000-07923000 r-xp 00000000 08:09 651026     /lib/libnsl-2.6.so
+07923000-07924000 r-xp 00014000 08:09 651026     /lib/libnsl-2.6.so
+07924000-07925000 rwxp 00015000 08:09 651026     /lib/libnsl-2.6.so
+07929000-0792d000 r-xp 00000000 08:09 2963331    /usr/lib/libXxf86vm.so.1.0.0
+0792d000-0792e000 rwxp 00003000 08:09 2963331    /usr/lib/libXxf86vm.so.1.0.0
+07950000-07991000 r-xs 00000000 08:09 915653     /usr/local/matlab/java/jar/toolbox/instrument.jar
+079a2000-079ac000 r-xp 00000000 08:09 2963332    /usr/lib/libdrm.so.2.3.0
+079ac000-079ad000 rwxp 00009000 08:09 2963332    /usr/lib/libdrm.so.2.3.0
+079af000-07a1e000 r-xp 00000000 08:09 2963424    /usr/lib/libGLU.so.1.3.060502
+07a1e000-07a1f000 rwxp 0006f000 08:09 2963424    /usr/lib/libGLU.so.1.3.060502
+07aff000-07bfd000 r-xp 00000000 08:09 2963272    /usr/lib/libX11.so.6.2.0
+07bfd000-07c01000 rwxp 000fe000 08:09 2963272    /usr/lib/libX11.so.6.2.0
+07c96000-07dcb000 r-xp 00000000 08:09 455720     /usr/local/matlab/bin/glnx86/atlas_P4.so
+07dcb000-07dcc000 rwxp 00134000 08:09 455720     /usr/local/matlab/bin/glnx86/atlas_P4.so
+07e5e000-07e69000 r-xp 00000000 08:09 650920     /lib/libgcc_s-4.1.2-20070503.so.1
+07e69000-07e6a000 rwxp 0000a000 08:09 650920     /lib/libgcc_s-4.1.2-20070503.so.1
+08048000-080be000 r-xp 00000000 08:09 455829     /usr/local/matlab/bin/glnx86/matlab
+080be000-080c5000 rwxp 00075000 08:09 455829     /usr/local/matlab/bin/glnx86/matlab
+a323d000-a55fd000 rwxs dc440000 00:10 8478       /dev/dri/card0
+a55fd000-a5dfd000 rwxs de800000 00:10 8478       /dev/dri/card0
+a5dfd000-a65fd000 rwxs df000000 00:10 8478       /dev/dri/card0
+a65fd000-a6dfd000 rwxs 2a004000 00:10 8478       /dev/dri/card0
+a6dfd000-a75fd000 rwxs d0020000 00:10 8478       /dev/dri/card0
+bf85e000-bf8a5000 rwxp bf85e000 00:00 0          [stack]
+
+Local Time = Tue Jun  5 11:19:28 2007
+Elapsed Time = 156400
+#
+# The exception above was detected in native code outside the VM
+#
+# Java VM: Java HotSpot(TM) Server VM (Blackdown-1.3.1-FCS mixed mode)
+#

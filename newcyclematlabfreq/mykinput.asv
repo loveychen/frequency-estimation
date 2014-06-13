@@ -1,0 +1,51 @@
+function [Vk]= mykinput()
+%% Description: Generates sampled 3 phase varying frequency input.
+% SYNTAX -------------------------------------------------------
+%       [Vk] =mykinput();
+% where      Vk   = sampled 3 phase voltage
+
+% Author:   Sandesh Gandhi & Chetan Tonde
+%           c/o Power Anser Labs, IIT Bombay
+%   Updated         : 10th MAY 2008
+%----------------------------------------------------------------
+global inputvolt_length;global F0;global Fs;global time_stamp;global Vmax;
+Fin=47                % starting frequency (Hz)
+win=2*pi*Fin/Fs;
+
+first_threshold=(inputvolt_length)/3
+second_threshold=(inputvolt_length)*2/3
+t=time_stamp(first_threshold:second_threshold);
+k=zeros(1,inputvolt_length);
+
+%% Linear
+k(first_threshold:second_threshold)=1.5; %for constant df/dt= k in Hz/sec
+%% Non-Linear
+%k(first_threshold:second_threshold)=2.5+0.1*sin(2*pi*5*t);
+%k(first_threshold:second_threshold)=2.5+0.1*(t-4)*(t-8);
+myplotgraph(k,18,'k');
+Fout=53              % ending frequency (Hz)
+wout=2*pi*Fout/Fs;
+Vk=zeros(3,inputvolt_length);
+phase=zeros(1,inputvolt_length);
+for n=1:inputvolt_length,
+    if(n<=first_threshold)        
+        Vk(1,n)= Vmax*(sin(win*n));
+        Vk(2,n)= Vmax*(sin(win*n-2*pi/3));
+        Vk(3,n)= Vmax*(sin(win*n+2*pi/3));
+        phase(n)=win*n;    
+    elseif (n>first_threshold & n<=second_threshold)
+        Vk(1,n)= Vmax*(sin(win*n+pi*k(n)*((n-first_threshold)/Fs)^2));
+        Vk(2,n)= Vmax*(sin(win*n+pi*k(n)*((n-first_threshold)/Fs)^2-2*pi/3));
+        Vk(3,n)= Vmax*(sin(win*n+pi*k(n)*((n-first_threshold)/Fs)^2+2*pi/3));
+        phase(n)=win*n+pi*k(n)*((n-first_threshold)/Fs)^2;
+    else         %(n>second_threshold & n<inputvolt_length)
+        Vk(1,n)= Vmax*(sin(wout*n-(wout-win)*(second_threshold+first_threshold)/2));
+        Vk(2,n)= Vmax*(sin(wout*n-(wout-win)*(second_threshold+first_threshold)/2-2*pi/3));
+        Vk(3,n)= Vmax*(sin(wout*n-(wout-win)*(second_threshold+first_threshold)/2+2*pi/3));
+        phase(n)=wout*n-(wout-win)*(second_threshold+first_threshold)/2;
+     end
+end  
+freq=zeros(1,inputvolt_length);
+r=2:inputvolt_length;
+freq=(phase(r)-phase(r-1))*Fs/(2*pi);
+myplotgraph(freq,6,'k--');

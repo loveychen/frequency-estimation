@@ -1,0 +1,571 @@
+\documentclass[journal]{IEEEtran}
+%\documentclass[twocolumn]{IEEEtran}
+\usepackage{graphicx}
+%\usepackage{rotating}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amstext}
+%\usepackage{amsthm}
+\usepackage{multirow}
+\usepackage{subfigure}
+\usepackage{url}
+%\usepackage{columns}
+\usepackage{lscape}
+\newtheorem{rem}{Remark}
+\begin{document}
+%\pagestyle{empty}
+\topmargin=0.15in
+
+\title{Adaptive Current Differential Protection Schemes for Transmission Line Protection}
+
+\author{{Sanjay Dambhare, S. A. Soman, {\it Member, IEEE,} M. C. Chandorkar, {\it Member, IEEE}}
+\thanks{Sanjay Dambhare, S. A. Soman and M. C. Chandorkar are with Department of Electrical Engineering, Indian Institute of Technology Bombay, Mumbai, India (e-mail: dambhare@ee.iitb.ac.in, soman@ee.iitb.ac.in, mukul@ee.iitb.ac.in)} \thanks{This work has been supported by PowerAnser Labs, IIT Bombay. Url: \protect \url{http://www.poweranser.com}}}
+
+%A GPS Synchronized Current Differential Protection Paper
+%\documentclass[journal]{IEEEtran}
+%\usepackage{graphicx}
+%\usepackage{amsmath}
+%\usepackage{url}
+%%\usepackage{onlyamsmath}
+%\begin{document}
+%\IEEEoverridecommandlockouts
+%\title{A GPS Synchronized Current Differential Protection Approach for Transmission System Protection}
+%\author{
+%\authorblockN{Sanjay Dambhare,}
+%%\authorblockA{} \and
+%\authorblockN{S. A. Soman, }
+%%\authorblockA{} \and
+%\authorblockN{M. C. Chandorkar, \emph{Student Member, IEEE}, }
+%%\authorblockA{} \and
+%\authorblockN{S. A. Soman, \emph{Member, IEEE} \thanks{This work has been supported by PowerAnser Labs, IIT Bombay. Url: \protect \url{http://www.poweranser.com}}\thanks{Sanjay Dambhare, S. A. Soman and M. C. Chandorkar are with the Indian Institute of Technology,
+%Bombay 400076, India.(e-mail: sanjay\_dambhare@iitb.ac.in; soman@ee.iitb.ac.in; mulul@ee.iitb.ac.in}}
+%%\authorblockA{}
+%}
+\maketitle
+\begin{abstract}
+      Through out the history of power system protection, researchers have strived to increase sensitivity and speed of apparatus protection systems without compromising security.  With the significant technological advances in Wide Area Measurement (WAM) systems, for transmission system protection, current differential protection scheme outscores alternatives like overcurrent and distance protection schemes.  Therefore, in this paper, we address this challenge by proposing a methodology for adaptive control of the restraining region in a current differential plane.
+      Subsequently, we extend the methodology for protection of series compensated transmission lines. Finally, we also evaluate the speed vs. accuracy conflict using phasorlets. EMTP simulations are used to substantiate the claims. The results demonstrate the utility of the proposed approach.
+\end{abstract}
+\begin{keywords}
+Adaptive protection, Current differential protection, GPS, Mutually coupled lines, Phasorlets, Series compensated lines, Tapped lines.
+
+\end{keywords}
+
+\section{Introduction}
+
+\PARstart{I}{t} is a well recognized fact that differential protection schemes provide sensitive protection with crisp demarcation of the protection zones. In principle, the differential protection is also immune to tripping on power swings. Such schemes when used for transmission systems using pilot wires are called pilot relaying schemes \cite{blackburn}. Two versions of pilot relaying schemes are used in practice, namely, directional comparison and phase comparison schemes. Being legacy systems, both approaches limit the communication requirements.
+
+In 1983, Sun et. al. \cite{sun} published a seminal paper describing current differential relay system using fiber optics communication. Fiber provides a better communication channel than metallic wire as it is immune to extraneous voltages like longitudinal induced voltage and station ground mat voltage rise. The basic idea is to transmit sequence current information from one end to another using Pulse Period Modulation (PPM) method. An effective transmission rate of 55 samples per cycle at 60 Hz frequency was achieved in \cite{sun}. Since, the differential comparison of the local and remote end current must correspond to the same time instant, a delay equalizer is used with the local sequence current signal to reflect the delay of the modem process of remote quantity.
+
+The inaccuracies in such a current differential protection scheme arise, primarily, due to the following reasons:
+\begin{itemize}
+\item effect of the distributed shunt capacitance current of the line is neglected;
+\item modeling inaccuracies with series compensated transmission line;
+\item approximate delay equalization between local and remote end current;\footnote{For example, at 50 Hz an uncompensated delay of 1 ms in communication will translate into an error of approximately 13 degrees in the phase computation.}
+\item Current Transformer (CT) inaccuracies, in particular errors due to saturation of the core in the presence of decaying dc offset current \cite{sidhu}.
+\end{itemize}
+
+\par Conventional current differential schemes employing GPS synchronized current measurements are discussed in \cite{Li,Hall,Gao}. When ultra high transmission system voltages are used e.g., 765 kV and above, then line charging current component is quite significant. It causes a large variation in phase angle of the line current from one end to another. In traditional pilot wire schemes, relaying sensitivity will have to be compromised to prevent the mal-operation.  Ref. \cite{xu} proposes current differential relay which uses distributed line model to consider line charging current.
+An adaptive GPS synchronized protection scheme using Clarke transformation is proposed in \cite{JoeAir}. The multi agent based wide area current differential protection system is proposed in \cite{Sheng}. References \cite{Adam1, Adam2} propose the use of phasorlets for fast computation of phasors in distance and differential relaying. Analytical treatment of phasorlets is presented in \cite{Serna}.
+
+\par If a transmission line has a series capacitor, then dependability of the conventional current differential relay may be compromised due to current inversion. Current inversion depends on degree of compensation, fault parameters and Metal Oxide Varistor (MOV) conduction. MOVs have non-linear V-I characteristics and they are connected in parallel with series capacitors to protect them from overvoltage. The performance of transmission system protection scheme in presence of series capacitor is discussed in \cite{Gopi}. In the case of distance relaying, effect of series compensation is even more serious due to presence of current or voltage inversion \cite{saha, girgis, mojtaba}. Even a segregated phase comparison scheme may fail to operate  on current inversion\cite{capBank}.
+
+\par Paper on digital communication for relay protection \cite{DCRP} authored by working group H9 of IEEE Power System Relaying committee is an excellent reference to understand the implications and consequences of digital communication technologies on relaying.  Modern high speed communication networks, typically use Synchronized Optical Network (SONET) or Synchronized Digital Hierarchies (SDH) standard for communication with transmission rates of the order of 274.2 Mbps or 155.5 Mbps respectively. They permit `network protection' i.e., during failure of a communication link, communication services are restored by reconfiguring  flow of information in alternate paths. A typical example is self healing ring architecture used with SONET \cite{PhadkeInfra}. In such networks, synchronization by delay equalizers become difficult  due to channel asymmetry. Due to channel asymmetry, communication delays for transmit and receive paths are not identical. This may lead to differential currents arising out of the errors in delay equalization,  especially if, identical time for transmit and receive paths are considered. However, if the current samples are time stamped by a Global Positioning System (GPS), then for calculation of differential current,  samples corresponding to same time instant can be compared, thereby providing immunity to channel delays, asymmetry, etc. \cite{Hall,Brunello}.  Differential current may be calculated either using instantaneous sample values, or by extracting phasors. Further, dynamic estimate of the channel delay can be easily maintained by subtracting the GPS time stamp at the transmit end from the receiving end time stamp. This permits back up operation even during GPS failure modes.
+
+\par Following the approach suggest by Phadke and Thorp \cite{phadkebook}, pp. 257, we first estimate the fictitious current $I^{ser}$ in the series branch of the \emph{$\pi$-equivalent} line model from the local voltage and current measurements and transmit it to the remote end of the line. In absence of a line fault (internal fault), estimate of phasor $I^{ser}$ computed at both  ends of the line will be identical. However, in presence of a fault on the line, the estimate of the series branch current at the two ends of the line will not match. Hence, the differential $\Delta I^{ser}$ provides an accurate discriminant for detection of the internal line fault.
+We develop the idea further and extend it for the protection of series compensated transmission. To provide sensitivity in both phase and earth fault protection, we develop an implementation in phase co-ordinates.
+
+ Primary objective of this paper is to propose a methodology to improve sensitivity and speed of the current differential protection scheme for transmission line protection without compromising it's security. To meet this objective, we suggest an adaptive procedure to set the restrain region in the current differential plane. We show that the proposed methodology significantly improves sensitivity and speed of the current differential protection scheme without sacrificing the security.
+\par This paper is organized as follows: Current differential protection framework is introduced in section \ref{three}. In section \ref{RT1}, the idea of adaptive restrain region is developed. Section \ref{3phC} explains the implementation in phase co-ordinates. Section \ref{scL} extends it to series compensated and multiterminal lines. In section \ref{CS}, we present simulation case studies in EMTP-ATP package on a 4-generator, 10-bus system with Capacitance Coupled Voltage Transformer (CCVT) model. Section \ref{CONC} concludes the paper.
+
+\section{Fundamentals} \label{three}
+\par Let us consider a positive sequence representation of an uncompensated transmission line. As shown in Fig. \ref{basic}, the line can be represented by an \emph{equivalent $\pi$}-model. Equivalent $\pi$ circuit correctly models the effect of distributed line parameters at the line terminals at the fundamental frequency.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[scale=0.45]{basic}
+\caption{GPS synchronized current differential protection scheme with \emph{equivalent $\pi$}-model of line.}
+\label{basic}
+\end{center}
+\end{figure}
+
+Let the positive sequence component of line current for reference phase $a$ measured at bus $i$ be given by $I^{line}_{ij}$. Then, the current $I^{ser}_{ij}$ in the series branch of the \emph{$\pi$-equivalent} line model at node $i$ can be computed as:
+\begin{eqnarray}
+ I^{ser}_{ij}&=&I^{line}_{ij}-I^{cap}_{i}
+ \label{eq1}\\
+\textrm{where,} \hspace{0.2cm}
+I^{cap}_{i}&=&j\frac{B}{2}V_i
+\end{eqnarray}
+is the current in shunt path at bus $i$. $V_i$ is the positive sequence voltage of reference phase $a$.
+\par Similarly, let the line current measured at bus $j$  be given by $I^{line}_{ji}$;  the current $I^{ser}_{ji}$ in the series branch of the \emph{$\pi$-equivalent} line model at node $j$
+can be computed as:
+\begin{eqnarray}
+ I^{ser}_{ji}&=&I^{line}_{ji}-I^{cap}_{j}
+  \label{eq2}\\
+\textrm{where,} \hspace{0.2cm}
+I^{cap}_{j}&=&j\frac{B}{2}V_j
+\end{eqnarray}
+is the current in shunt path at bus $j$.
+\par If there is no internal fault on the line then:
+\begin{equation}
+I_{diff}=I^{ser}_{ij}+I^{ser}_{ji}=0. \label{DF1}
+\end{equation}
+\emph{Hence, we conclude that a fault is present on the transmission line if and only if the discriminant function $I_{diff}$ is non-zero.}
+{\rem In contrast to the traditional current differential protection scheme, current differential protection schemes  which model line capacitance also require line voltage signals. This may not translate in additional cost of voltage transformers because the voltage signal may be available on the local substation LAN.}
+\rem {If  bus voltage measurements are not available, then with synchronized line current phasor measurements they can be  estimated from the following equation.
+\begin{equation}
+ \left [ \begin{array}{c} V_i \\ V_j  \end{array}\right ] = \left [ \begin{array}{cc}
+  j\frac{B}{2}+\frac{1}{Z} & -\frac{1}{Z} \\
+  -\frac{1}{Z} & j\frac{B}{2}+\frac{1}{Z} \end{array} \right ]^{-1}\times \left [ \begin{array}{c} I_{ij} \\ I_{ji} \end{array} \right ]
+\end{equation}
+This shows that to account for line charging current contribution, synchronized bus voltage phasor measurements are not compulsory. The necessary requirement is either synchronized bus voltage measurements or synchronized line current measurements. However,  availability of both of these measurements will provide redundancy and hence improve the estimate of series currents.}
+ \subsection{Relay Setting in Current Differential Plane \label{RT}}
+ With conventional relay setting approach, operating current $I_{op}$ and restraining current $I_{re}$ for the current differential scheme can be expressed as follows:
+\begin{eqnarray}
+I_{op}&=&\mid I^{ser}_{ij}+I^{ser}_{ji}\mid
+\label{eq33}\\
+\textrm{and,} \hspace{0.2cm}
+I_{re}&=&\mid I^{ser}_{ij}-I^{ser}_{ji}\mid.
+\label{eq44}
+\end{eqnarray}
+The percentage differential relay pick up and operate when:
+\begin{eqnarray}
+I_{op}&\geqslant&I_{o} \\
+\textrm{and,} \hspace{0.2cm}
+I_{op}&\geqslant&KI_{re}
+\end{eqnarray}
+where, $I_{o}$ is a pick up current and $K$ is the restraint coefficient $(0<K<1$).
+However, it has been shown in \cite{Zhang} that numerical differential relay can be set more accurately in a current differential plane. Using the phase and magnitude information of series branch current, we calculate:
+\begin{eqnarray}
+ratio&=&\frac{|I^{ser}_{ij}|}{|I^{ser}_{ji}|}\\
+\textrm{and,} \hspace{0.2cm}
+ang&=&\angle (I_{ij}^{ser})-\angle (I_{ji}^{ser}).
+\end{eqnarray}
+In  absence of an internal fault, for the proposed discriminant function (\ref{DF1}) we have,
+$$ratio=1 \ \mathrm{and}\ ang=180^{o}.$$   As shown in Fig. \ref{trip}, this can be visualized in the current differential plane by point $X$ at $(180^{o}, 1)$. Ideally, every point other than $X$ indicates an internal fault. However, even in absence of an internal fault, in real life the operating point may deviate from  the point $(180^{o}, 1)$ due to following reasons:
+\begin{enumerate}
+\item synchronization error;
+\item delay equalizer error;
+\item modeling restrictions i.e., assumptions, approximations or inaccuracies of the algorithm\footnote{ In principle, one can question the validity of phasor computation in relaying algorithms whether distance protection or differential protection because if the relaying decision has to be arrived within 1 cycle of the fault inception, then, the actual voltage and current signals are far too different from  a sinusoid.} and
+\item ratio and phase angle errors of CT.  These errors may become significant when a CT core saturates because of large currents during an external fault.
+\end{enumerate}
+\par Since GPS provides time synchronization of the order of $1\mu$ sec, the synchronization error can be practically eliminated. Also, if the same time stamped samples of two end are processed, delay equalizer error can be eliminated.  Further, explicit modeling of the shunt capacitance of the line reduces the modeling errors. Therefore,  we can reduce the width of the restrain region in the current differential plane. We use $\pm20^{o}$ for phase error\footnote{Reference \cite{Zhang} has suggested $\pm 40^{o}$ margin for phase angle error.} and $\pm150 \%$ for magnitude error in current differential plane. Hence, $ratio_{min}=0.4$, $ratio_{max}=2.5$, $ang_{min}=160^{o}$ and $ang_{max}=200^{o}$ (refer Fig. \ref{trip}). The corresponding value of $K$ in conventional relay setting approach is nearly $0.43$.
+\par Now, a fault on the transmission line can be detected by the following algorithm. \\
+\begin{enumerate}
+\item Set the threshold parameters $ratio_{min}, \ ratio_{max}$, \ $ang_{min}$ \ and \ $ang_{max}$ for detecting differential current.
+\item Compute the current $I^{ser}_{ij}$ using GPS synchronized line current and  bus voltage measurements at bus $i$.
+\item Compute the current $I^{ser}_{ji}$ using GPS synchronized line current and  bus voltage measurements at bus $j$.
+\item Check if: $$ratio_{min} \le \hspace{0.3cm}\frac{|I^{ser}_{ij}|}{|I^{ser}_{ji}|} \hspace{0.6cm} \le ratio_{max}$$ $\textrm{AND} \hspace{0.4cm}ang_{min} \le \hspace{0.2cm}\angle (I_{ij}^{ser})-\angle (I_{ji}^{ser}) \le ang_{max}$. \\If TRUE, then there is no fault on the transmission line. Conversely, if FALSE then there is a fault on the transmission line.
+\end{enumerate}
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[scale=0.45]{trip}
+\caption{Trip and the restrain region in current differential plane.}
+\label{trip}
+\end{center}
+\end{figure}
+\section{Adaptive Control of Restrain Region \label{RT1}}
+\par A protection engineers strikes balance between dependability\footnote{Dependability implies that the relay will always operate for conditions it is designed to operate \cite{phadkebook}.} and security\footnote{A relay is said to be secure if the relay will not operate for any other power system disturbance \cite{phadkebook}.} by controlling the sensitivity. Dependability of a relay can be improved by increasing the sensitivity. Sensitivity of the differential relay can be improved by reducing the area of the restrain region in the Fig. \ref{trip}. Since, we have already tightened the width of the restrain region, this implies that we should reduce the height of the rectangle representing the restrain region. However, it is equally important to keep it large enough so that relay does not pickup on transients or external disturbance which includes a fault. Too sensitive relay setting increases the possibility of relay maloperation and hence compromises security.
+
+We now propose an important enhancement to improve sensitivity of the current differential relay without compromising on it's security. Basically, sensitivity  implies an ability to detect low current or high impedance fault. The proposed enhancement is based on the following observations:
+\begin{enumerate}
+\item high impedance fault may not involve appreciable transients;
+\item high impedance faults should not lead to gross errors due to CT saturation and
+\item large disturbances e.g., load throw off and external faults will cause large differential currents because 1) the phasor model is not truly valid under situations and 2) CT errors may increase due to partial saturation. Hence, large transients or disturbances call for large restrain region.
+\end{enumerate}
+The above observations suggest that the height of the restrain region should be a function of the current magnitudes of $I_{ij}^{ser}$ and $I_{ji}^{ser}$. In particular, we propose the following restraining function:
+\begin{equation}
+   \psi(I_{ij}^{ser}, I_{ji}^{ser})= \frac{|I_{ij}^{ser}|}{|I_{ji}^{ser}|} - \left [a+ m \left (|I_{ij}^{ser}|+|I_{ji}^{ser}|\right ) \right ] \label{res1}
+\end{equation}
+where $a$ and $m$ are suitable constants. We assume that $\frac{|I_{ij}^{ser}|}{|I_{ji}^{ser}|}$ is greater than 1. In case, the ratio is less than one, then numerator and the denominator should be interchanged.
+ The relay trips when either 1) restraining function is greater than zero or 2) when the angular separation criterion described in the earlier section is violated.
+ \subsubsection{Selection of constants $a$ and $m$}
+ Under no fault and ideal conditions,  ratio $\frac{|I_{ij}^{ser}|}{|I_{ji}^{ser}|}$ is equal to one. Further, the term $\left (|I_{ij}^{ser}|+|I_{ji}^{ser}|\right )$ depends upon line current and hence can be very small. This suggests that constant $a$ should be at least equal to 1. Further, for sensitive protection, constant $a$ should be chosen close to unity. In particular, we have found $a=1.3$ and $m=0.0015$ to be a satisfactory choice. Small magnitude of $m$ is chosen because fault current range is approximately in kiloAmperes. At lower values of $a$, possibility of relay mal-operation on extreme load throw offs have been observed.
+
+ {\rem We considered different descriptors which correctly describe the properties of the proposed relay setting methodology. The terminology {\em adaptive} was preferred because with the proposed methodology, relay restrain region adapts\footnote{ Phadke and Thorp in \cite{phadkebook} define adaptive protection as a protection philosophy which permits and seeks to make adjustments to various protection functions in order to make them more attuned to prevailing power system conditions.} according to the current loading of line.}
+\section{Current Differential Protection in Phase Co-ordinates \label{3phC} }
+Positive sequence network is excited by both ground and phase faults. Hence, in principle, current differential protection scheme using a positive sequence network representation can alone detect all possible faults. However, sensitivity using positive sequence component alone will vary with the type of fault. It will be maximum for bolted 3-phase (LLLG) fault. In contrast, for a single line to ground fault, the sensitivity for ground fault detection will be reduced by a factor of 3 approximately.\footnote{Note that for LLLG fault, $I^{a}_{f}=I_{a1}$ and for LG fault $I^{a}_{f} \approx 3I_{a1}$.} This motivates that either all the sequence networks (positive, negative, zero) be used for decision making, or computation in phase co-ordinates should be employed. We prefer the phase domain approach because of its simplicity and accuracy.
+
+\par Let us consider the \emph{equivalent-$\pi$}  model of a three phase transposed transmission line as shown in Fig. \ref{3phline}.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[scale=0.45]{3phline.eps}
+\caption{Equivalent-$\pi$ model of three phase transposed transmission line \cite{EMTPbook}.}
+\label{3phline}
+\end{center}
+\end{figure}
+
+Let $Z_s$ and $Z_m$ be the self and mutual series impedance of the line. For a transposed line, they can be easily computed from the sequence data as follows:
+\begin{eqnarray}
+Z_s&=&\frac{1}{3}(Z_0 + 2Z_1) \\
+\textrm{and,} \hspace{0.2cm}
+Z_m&=&\frac{1}{3}(Z_0 - Z_1)
+\end{eqnarray}
+where, $Z_1$, $Z_2$ and $Z_0$ are the positive, negative and zero sequence impedance of the transmission line.
+Similarly, $B_s$ and $B_m$ are self and mutual shunt susceptance of the transmission line. They can be computed as follows:
+\begin{eqnarray}
+  B_s&=&\frac{1}{3}(B_0 + 2B_1)
+  \label{eq55}\\
+\textrm{and,} \hspace{0.2cm}
+ B_m&=&\frac{1}{3}(B_0 - B_1).
+\end{eqnarray}
+It has to be noted that, usually $B_m$ will be negative as $C_0$ $<$ $C_1$.
+Now from Fig. \ref{3phline}, line current equation at bus $i$ in phase co-ordinates can be expressed as follows:
+\begin{equation}
+\left[\hspace{-0.2 cm}\begin{array}{c} I_{ij}^{line}(a)\\I_{ij}^{line}(b)\\I_{ij}^{line}(c)\end{array}\hspace{-0.2 cm}\right]\hspace{-0.1 cm}=\hspace{-0.1 cm}
+\left[\hspace{-0.2 cm}\begin{array}{c} I_{ij}^{ser}(a)\\I_{ij}^{ser}(b)\\I_{ij}^{ser}(c)\end{array}\hspace{-0.2 cm}\right]\hspace{-0.02 cm} + \frac{j}{2} \left[\hspace{-0.2 cm}\begin{array}{ccc} B_s & B_m & B_m \\ B_m & B_s & B_m \\ B_m & B_m & B_s \end{array}\hspace{-0.2 cm}\right] \hspace{-0.2 cm}
+\left[\hspace{-0.2 cm}\begin{array}{c} V_{i}(a)\\V_{i}(b) \\V_{i}(c)\end{array}\hspace{-0.2 cm}\right].
+\label{eq555}
+\end{equation}
+Indices $a$, $b$ and $c$ represent the respective phases.
+Similarly, line current equation at bus $j$ can be expressed as follows:
+\begin{equation}
+\left[\hspace{-0.2 cm}\begin{array}{c} I_{ji}^{line}(a)\\I_{ji}^{line}(b)\\I_{ji}^{line}(c)\end{array}\hspace{-0.2 cm}\right]\hspace{-0.1 cm}=\hspace{-0.1 cm}
+\left[\hspace{-0.2 cm}\begin{array}{c} I_{ji}^{ser}(a)\\I_{ji}^{ser}(b)\\I_{ji}^{ser}(c)\end{array}\hspace{-0.2 cm}\right]\hspace{-0.02 cm} + \frac{j}{2} \left[\hspace{-0.2 cm}\begin{array}{ccc} B_s & B_m & B_m \\ B_m & B_s & B_m \\ B_m & B_m & B_s \end{array}\hspace{-0.2 cm}\right]\hspace{-0.2 cm}
+\left[\hspace{-0.2 cm}\begin{array}{c} V_{j}(a)\\V_{j}(b) \\V_{j}(c)\end{array}\hspace{-0.2 cm}\right].
+\label{eq66}
+\end{equation}
+Thus, we conclude that there is no fault on the line \emph{if and only if}:
+\begin{eqnarray}
+\label{eq111}
+I^{ser}_{ij}(a)+I^{ser}_{ji}(a)&=&0\\
+\label{eq222}
+I^{ser}_{ij}(b)+I^{ser}_{ji}(b)&=&0\\
+\label{eq333}
+I^{ser}_{ij}(c)+I^{ser}_{ji}(c)&=&0.
+\end{eqnarray}
+In practice, each phase tripping logic can be set using the procedures described in the sections \ref{RT} and \ref{RT1}.
+{\rem The currents phasors $I_{ij}^{ser}$ and $I_{ji}^{ser}$ can be computed from GPS synchronized measurements using (\ref {eq555}) and (\ref {eq66}). Total twelve GPS synchronized measurements are required, three currents and three voltages at each end. Phasors are computed from samples by recursive Discrete Fourier Transform (DFT) \cite{phadkebook} or phasorlets \cite{Serna} and are updated with every samples.\footnote{An alternative to estimation of currents $I_{ij}^{ser}$ and $I_{ji}^{ser}$ in the phase domain would be computation in the time domain. However, phasor approach has been preferred because it avoids numerical differentiation.}}
+{\rem
+There is no possibility of inadvertent tripping of the transmission line due to line charging current. This is because the discriminant function value $I_{ij}^{ser}+I_{ji}^{ser}$ will be zero even during line charging.}
+
+\section{Current Differential Protection Scheme for Series Compensated Transmission Lines\label{scL}}
+Series capacitor on a transmission line can be installed at either of the ends or at the mid point. If a line is compensated at its terminals then the scheme described in the previous section can be applied in toto using line connected GPS synchronized line current and bus voltage measurements (see Fig. \ref{endSC}). However, if mid point compensation is used, then the basic scheme using sequence network representation (proposed in the section \ref{three}) should be modified as follows.
+
+\par Fig. \ref{midSC} shows a line with series compensation at mid point. The line sections of either side of series compensation are accurately modeled by \emph{equivalent $\pi$} model of transmission line.\footnote{Each \emph{equivalent $\pi$} model correspond to half of the line length of uncompensated line. Notice that, with \emph{equivalent $\pi$}, $B^h\neq \frac{B}{2}$, where $h$ correspond to half the line length.}
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[scale=0.45]{endSC}
+\caption{GPS synchronized current differential protection scheme for series compensated line (series capacitor at end).}
+\label{endSC}
+\end{center}
+\end{figure}
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[scale=0.45]{midSC}
+\caption{GPS synchronized current differential protection scheme for series compensated line (series capacitor at mid point).}
+\label{midSC}
+\end{center}
+\end{figure}
+
+From the bus voltage and line current measurements at bus $i$, we estimate the current in the series capacitor-MOV combination $I^{ser}_{cap_{ij}}$ as follows:
+
+     \begin{eqnarray}
+     I_{ik}^{ser}&=&I_{ij}^{line}-j \frac{B^h}{2}V_{i} \\
+     V_{k}&=&V_i - Z^hI_{ik}^{ser} \\
+     I^{ser}_{cap_{ij}}&=&I_{ik}^{ser} - j\frac{B^h}{2}V_{k}.
+     \end{eqnarray}
+Similarly, current $I^{ser}_{cap_{ji}}$ can be estimated by the following equations:
+ \begin{eqnarray}
+     I_{jm}^{ser}&=&I_{ji}^{line}-j\frac{B^h}{2}V_{j} \\
+     V_{m}& = &V_j - Z^hI_{jm}^{ser} \\
+     I^{ser}_{cap_{ji}} &= &I_{jm}^{ser} - j\frac{B^h}{2}V_{m}.
+     \end{eqnarray}
+
+If there is no fault on the line, then we have:
+ $$ I_{diff}= I^{ser}_{cap_{ij}}+ I^{ser}_{cap_{ji}} = 0.$$
+However, if there is a fault on the line then discriminant function ($I_{diff}$) will not be zero. This indicates the presence of the line fault.
+ {\rem The extension of the above scheme in phase co-ordinates is straight forward. For simplicity of illustration, we have used sequence representation, but all calculations are carried out in phase coordinates.
+The method can be easily adapted even if the series compensation is not at the center of the line. Similarly, the scheme can be extended for protection of a multiterminal line as discussed in appendix \ref{mulT}.}
+\section{Case Studies \label{CS} }
+%\subsection{System description}
+%\label{sec_231}
+To evaluate  performance of the proposed scheme, following methodology has been used:
+\begin{enumerate}
+\item Simulate power system response to disturbances e.g., faults using Electro Magnetic Transient Program (EMTP)  simulations. ATP \cite{EMTPbook} software has been used for simulations.
+\item Samples obtained from the EMTP simulation are fed to a MATLAB program which implements the proposed differential protection scheme. Full cycle recursive DFT, half cycle recursive DFT and phasorlets algorithms are used to estimate the phasors.
+\item The proposed scheme is compared and contrasted with 1) the conventional GPS based current differential scheme of \cite{Li} and 2) a  more recent method reported in \cite{xu}.
+\end{enumerate}
+
+We report results on a two area, 230 kV, 4 generator, 10 bus system (refer Fig. \ref{4machinesystem}). Detailed generator, load and line data on a 100 MVA base is given in \cite{padiyar}. The two areas are connected by three parallel AC tie lines of 220 km each.
+\begin{figure} [!ht]
+\begin{center}
+\includegraphics[scale=0.4]{4machinesystem.eps}
+\caption{Single line diagram of 2 area, 4 generator, 10 bus system.}
+\label{4machinesystem}
+\end{center}
+\end{figure}
+
+In ATP-EMTP simulation, transmission lines are represented by Clarke's model (distributed parameters) and detailed model is used for representing generators. Initial values of generator voltage magnitude and angles are calculated from the load flow analysis. The proposed scheme is applied for primary protection of one of the tie lines $L_{3}$ between node 3 and 13.  The fault location is measured from bus 3. ANSI 1200:5, class C400 CT model \cite{CT} and 250 kV:100 V CVT model \cite{CVT}, have been used for obtaining realistic CT and CCVT response during EMTP simulations.
+
+Samples obtained from ATP-EMTP simulation correspond to time synchronized GPS samples.  The time step used for ATP-EMTP simulations is $20 \mu s$. However, relaying system data acquisition rate is set to 1000 Hz.
+
+%\footnote{Sanjay: In our simulations we have neglected the effect of aliasing.This is a bit of worry technically. Can you connect a low pass filter, like the 2 stage filter from phadke and thorp's book at the ct and vt outputs in emtp simulation. that would be a better input to the relay algorithm. Please discuss.}
+
+The performance of the proposed scheme can be gauged by it's ability to  balance following well know contradictions of power systems relaying:
+\begin{itemize}
+\item Dependability vs. Security and
+\item Speed vs. Accuracy.
+\end{itemize}
+We also evaluate the performance with series compensated and mutually coupled lines.
+\subsection{Dependability vs. Security}
+\par First, we consider non-adaptive setting of the relay in current differential plane which has already been outlined in section \ref{RT}. Then, we provide results with the adaptive scheme.
+\subsubsection{External faults}
+To ascertain security, it must be ascertained that the differential relay does not operate for any external fault. This verification is usually carried out on the severe external faults. All the four types of external shunt faults (LG, LL, LLG and LLL) are simulated on busses 3 and 13 as well as on adjacent lines 3-102 and lines 13-112 at 25\%, 50\% and 75\% length. In each case, the fault resistance is varied  from 0 $\Omega$ to 100 $\Omega$ in steps of 10 $\Omega$ and fault inception angle is varied from $0^{o}$ to $300^{o}$ in steps of $15^{o}$. For each case, we compute $ratio=\frac{|I^{ser}_{ij}|}{|I^{ser}_{ji}|}$ ,  $ang= \angle (I_{ij}^{ser})-\angle (I_{ji}^{ser})$, and plot the final operating point (marked by '+' in Fig. \ref{tripex}) on current differential plane. As the '+' always appear in restrain region, it validates that the proposed relay will not trip on load or external fault. The figure also shows that the restrain region cannot be reduced, significantly, without compromising the relay security.
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.45]{tripex.eps}
+\caption{Performance of proposed current differential protection scheme on external faults. Note that relay does not pick up as all the final operating points are inside the restrain region.}
+\label{tripex}
+\end{center}
+\end{figure}
+
+Fig. \ref{tripextflt} shows the trajectory of phase-a operating point on current differential plane for the bolted LLL fault on bus 3 (external fault) for the fault inception angle of $270^{o}$. Notice that, as the relay operating point lies inside the restrain region, relay does not pick up on external fault.
+%The operating and restraining currents corresponding to the conventional relay with equivalent fixed percentage differential setting ($K=0.43$) are also shown in Fig. \ref{OpRestExt}. As the operating current is less than $K$ times restraining current, the relay does not pick up on external fault. Similar behaviour is observed for other two phases also.
+
+ Similar investigations carried out with the adaptive relay setting show that the relay does not pick up on any external fault or large disturbance like load throw off etc. However, the conventional scheme of \cite{Li} tends to operate on low resistance external fault on bus 3 and 13. We conclude that proposed scheme does not pick up on external faults.
+\subsubsection{Internal faults}
+%\par As the proposed scheme is applied for the primary protection of tie line $L_{3}$ (refer Fig. \ref{4machinesystem}), all the four types of faults (LG, LL, LLG and LLL) are simulated on the line $L_{3}$. For each type of fault, fault location is varied from 0\% to 100\% in steps of 10\%; fault resistance is varied from 0 $\Omega$ to 600 $\Omega$ in the steps of 10 $\Omega$ and fault inception angle is varied from $0^{o}$ to $300^{o}$ in steps of $15^{o}$. Again, the final relay operating point in current differential plane is marked by '+' in Fig. \ref{tripint} for all the cases. As the '+' always appear in operating region (outside the restrain region), it validates that the relay will trip on all internal faults. The simulation results show that only faulty phase trips.
+Sensitivity of the proposed scheme can be evaluated by  it's ability to detect a high impedance internal fault. Fig. \ref{Ph-a-TrajInt} shows the trajectory of phase-a operating points on current differential plane for one of the cases of LL fault on phase a-b, at the start of line for the fault inception angle of $270^{o}$ and a large fault resistance of 600 $\Omega$.
+%Now, as shown in Fig. \ref{OpResCurrInt}, $K$ times restraining current (plus threshold) of phase-a is marginally less than the operating current, hence the relay picks up. Similar behavior is observed for other two phases.
+%\subsubsection{High resistance internal faults}
+ Table \ref{HighRfault} shows the highest resistance fault, that can be detected by the differential protection schemes on line $L_{3}$, irrespective of fault location and fault inception angle. The relays were set to provide maximum sensitivity without compromising security.
+\begin{table}[!ht]
+\begin{center}
+\caption{Sensitivity for high resistance internal fault}
+\begin{tabular}{c|c|c|c|c}
+\hline
+Sr & Protection     & LG Fault     & LL Fault     & LLL Fault  \\
+No & Scheme         & R ($\Omega$) & R ($\Omega$) & R ($\Omega$)\\
+\hline
+1  & Ref. \cite{Li} & 408   & 607   &  411  \\
+   &  Scheme        &       &       &       \\
+\hline
+2  & Ref. \cite{xu} & 593   & 997   &  633  \\
+   &  Scheme        &       &       &       \\
+\hline
+3  & Proposed       & 602   & 1004  &  638  \\
+   &  Scheme       &       &       &       \\
+   & Nonadaptive Setting      &       &       &       \\
+   \hline
+4  & Proposed       & 1525   & 2405  &  1610  \\
+   &  Scheme       &       &       &       \\
+   &  Adaptive Setting      &       &       &       \\
+\hline
+\end{tabular}
+\label{HighRfault}
+\end{center}
+\end{table}
+
+\par The table clearly shows that the proposed  scheme enables far more sensitive relay setting than the conventional scheme of \cite{Li}. With non-adaptive setting, the relay sensitivity is similar to that of scheme suggested in \cite{xu}. This is can be explained from the fact that both the methods account for line charging contributions.  However, with the proposed adaptive setting strategy of the restrain region, we notice that sensitivity of the current differential protection scheme improves by a factor of about $2.5$. We emphasize that this improvement in the sensitivity using adaptive setting strategy is not at the cost of the relay security.
+\begin{center}
+\begin{figure}
+%\hspace{-0.5cm}
+\includegraphics[scale=0.35]{tripextflt.eps}
+\caption{Trajectory of phase-a operating point for proposed current differential protection scheme on external fault
+(LLL bolted fault on bus 3, fault inception angle $270^{o}$). Note that the relay does not pick.}
+\label{tripextflt}
+\end{figure}
+\end{center}
+%\begin{figure}
+%\begin{center}
+%             %\includegraphics[width=3in, height=1in]{OpRestExt.eps }
+%             %\includegraphics[width=0.6\textwidth]{OpRestExt.eps }
+%%\hspace{-0.2cm}
+%\includegraphics[scale=0.35]{OpRestExt.eps}
+%\caption{Operating and restraining currents of phase-a for proposed current differential protection scheme for external fault (LLL bolted fault on bus 3, fault inception angle $270^{o}$ with $K=0.43$). Note that $I_{op}\leqslant KI_{re}$.}
+%\label{OpRestExt}
+%\end{center}
+%\end{figure}
+{\rem The external system can change due to various factors like,
+sudden large change in load or generation, outage of adjacent line,
+single pole tripping, non simultaneous opening of adjacent line
+circuit breaker etc. Simulations have been carried out to ascertain
+that, proposed current differential scheme is very robust and dose
+not maloperate on any of the above system disturbances.}
+
+\subsubsection{Line charging}
+The energization of line $L_{3}$ under no load and heavy load condition is simulated and the performance of proposed current differential scheme is compared with other schemes. Simulation results show that the proposed scheme is immune to line charging current. This is because the actuating quantity of proposed scheme, $I^{ser}$ is independent of line charging current.
+%\begin{figure}
+%\begin{center}
+%\includegraphics[scale=0.45]{tripint.eps}
+%\caption{Performance of proposed current differential protection scheme on internal faults. Note that relay pick up as all points are outside the restrain region.}
+%\label{tripint}
+%\end{center}
+%\end{figure}
+\begin{figure}
+\begin{center}
+%\hspace{-0.88cm}
+\includegraphics[scale=0.35]{Ph-a-TrajInt.eps}
+\caption{Trajectory of phase-a operating point of proposed current differential protection scheme for internal fault (LL fault at the start of line, fault inception angle $270^{o}$, fault resistance=600 $\Omega$). Note that the relay pick.}
+\label{Ph-a-TrajInt}
+\end{center}
+\end{figure}
+%\begin{figure}
+%\begin{center}
+%%\hspace{-0.2cm}
+%\includegraphics[scale=0.35]{OpResCurrInt.eps}
+%\caption{Operating and restraining currents of phase-a for proposed current differential protection scheme for internal fault (LL fault at the start of line, fault inception angle $270^{o}$, fault resistance=600 $\Omega$ with $K=0.43$). Note that $I_{op}\geqslant KI_{re}$.}
+%\label{OpResCurrInt}
+%\end{center}
+%\end{figure}
+\subsubsection{Effect of a mutually coupled line}
+In principle, a current differential relay should be immune to effect of mutual coupling of double circuit transmission lines. To ascertain this, line $L_{2}$ and $L_{3}$ (refer Fig. \ref{4machinesystem}) are modeled as individual continuously transposed double circuit lines with inter-circuit zero sequence coupling, using distributed parameters (Clarke-$2 \times 3$) model. Proposed scheme is applied to line $L_{3}$ and is tested for all four types of faults on line $L_{2}$ and also on line $L_{3}$. The fault location, fault resistance and fault inception angle is also varied. Simulation results confirm that proposed current differential scheme trips correctly on all internal faults and does not maloperate on any external fault.
+\subsection{Speed vs. Accuracy}
+\par In the proposed GPS synchronized current differential protection scheme, the phasors are updated after every sample. The scheme is very fast (refer Fig. \ref{phasorlet} and \ref{samples}) even if the trip decision is taken on the basis of error exceeding the threshold value consistently for four samples. Simulation results show that the proposed scheme is very fast and takes less than half cycle to operate for low resistance faults. However, it needs 1 to 2 cycles to detect the faults above 500 $\Omega$ resistance. This is acceptable with high impedance faults as the fault current level is low and CTs will not saturate.
+
+\subsubsection{Phasor estimation algorithms}
+\par The relay operating time is affected by the method of phasor estimation. Fig. \ref{phasorlet} show the operating time of proposed scheme when phasors are estimated using full cycle recursive DFT (FCDFT), half cycle recursive DFT (HCDFT) and phasorlet with adaptive and nonadaptive settings. The studies show that, with both the relay setting, phasorlets gives fastest relay operation followed by half cycle recursive DFT and full cycle recursive DFT respectively for the same sampling frequency. Similar behavior is observed for other two phases.
+
+%\footnote{Sanjay: Send me a updated figure also considering adaptive setting. From it we will conclude that adaptive protection also improves speed of protection.}
+
+\begin{figure}
+\begin{center}
+%\hspace{-0.2cm}
+\includegraphics[scale=0.35]{phasorlet.eps}
+\caption{Effect of phasor computation algorithms on relay operating time of phase-a for LLL fault at midpoint for the proposed current differential protection scheme (sampling frequency is 1kHz).}
+\label{phasorlet}
+\end{center}
+\end{figure}
+The results also show that relay operation is faster with adaptive
+control of restrain region irrespective of phasor estimation
+algorithm. The fastest relay operation is achieved with adaptive
+control of restrain region and when phasorlet algorithm is used for
+phasor computation.
+\rem {It is interesting to observe that time to trip has an inverse relationship to magnitude of fault current.} 
+\par This behavior can be explained as follows.
+ For the sake of simplicity, consider that phasor is computed using full cycle recursive DFT and nonadaptive methodology is used.  It takes one cycle for the phasor computation algorithm to latch to fault current value. Assuming a linear change in the estimate, we see that for  a fixed pick up value, larger fault currents imply faster pick up (and vice versa).
+
+%With phasorlets one needs to monitor consistency of decision making for a longer interval
+%before actuating tripping decision since phasorlets improve speed characteristic at the cost of the
+%accuracy of phasor estimation, to prevent wrong operation. This to an extent compromises
+%the speed advantage. Hence, we conclude that from a adaptive scheme
+%with phasorlet provides the best compromise between speed and
+%accuracy.
+\subsubsection{Sampling frequency}
+\par The sample rate affects on the operating time i.e. speed of relay. Fig. \ref{samples} show the operating time of proposed scheme with adaptive and nonadaptive settings, for the sampling frequency of 1, 2  and 2.5 kHz using full cycle recursive DFT algorithm for phasors estimation. The studies show that, 2.5 kHz gives fastest relay operation followed by 2 kHz and 1 kHz respectively. However, marginal gains in speed reduce at higher sampling frequencies i.e., a result in concurrence with the law of diminishing marginal utility. Similar observations have been made in the context of digital distance relay in \cite{Adam1} and \cite{GEThorp}.
+
+%\footnote{Sanjay: Send me a updated figure also considering adaptive setting with only 1 cycle DFT implementation.}
+
+\begin{figure}
+\begin{center}
+%\hspace{-0.2cm}
+\includegraphics[scale=0.35]{samples.eps}
+\caption{Effect of sampling frequency on relay operating time of phase-a for LLL fault at midpoint for the proposed current differential protection scheme when phasors are estimated using full cycle recursive DFT.}
+\label{samples}
+\end{center}
+\end{figure}
+
+\subsection{Performance with series compensated line}
+\par Application of proposed scheme to series compensated transmission line is discussed in section \ref{scL}. All the three tie lines between nodes 3 and 13 (refer Fig. \ref{4machinesystem}) are compensated with 30\% series capacitive compensation. The MOV data (connected across the series capacitors) is given in \cite{EMTPbook}. The parallel combination of series capacitor and MOVs are placed at the mid point of lines. Initial value of generator voltage magnitudes and angles are computed from the load flow analysis of compensated system. The proposed scheme is then applied for the primary protection of tie line $L_{3}$. All the four types of faults (LG, LL, LLG and LLL) are simulated on both side of series capacitor on line $L_{3}$ to test the performance of proposed scheme on internal faults. Similar faults are simulated on bus 3 and bus 13 as well as on lines 3-102 and lines 13-112 to test the performance of proposed scheme on external faults. For every fault, fault location is varied from 0\% to 100\% in steps of 10\%, fault resistance is increased from 0 $\Omega$ in steps of 10 $\Omega$ and fault inception angle is varied from $0^{o}$ to $300^{o}$ in steps of $15^{o}$. It is validated that the relay discriminates between internal and external fault and trips on internal fault only.
+
+\begin{table}[!ht]
+\begin{center}
+\caption{Sensitivity for high resistance internal fault for series compensated line}
+\begin{tabular}{c|c|c|c|c}
+\hline
+Sr & Protection     & LG Fault & LL Fault  & LLL Fault \\
+No & Scheme         & R ($\Omega$) & R ($\Omega$) & R ($\Omega$)\\
+\hline
+1  & Ref. \cite{Li} & 310   &  520  & 330   \\
+   &  Scheme        &       &       &       \\
+\hline
+2  & Ref. \cite{xu} & 476   & 815   &  508  \\
+   &  Scheme        &       &       &       \\
+\hline
+3.  & Proposed       & 482   & 818   &  514  \\
+   &  Scheme         &       &       &       \\
+   &  Nonadaptive setting    &       &       & \\
+\hline
+3.  & Proposed       & 1140  & 1670   &  1105  \\
+   &  Scheme        &       &       &       \\
+    &   Adaptive Setting   &       &       & \\
+\hline
+\end{tabular}
+\label{HighRfaultComp}
+\end{center}
+\end{table}
+
+\par Extensive case studies are simulated to compare the sensitivity of proposed scheme with  schemes of \cite{Li} and \cite{xu} for internal faults. Table \ref{HighRfaultComp} shows the highest resistance fault, that can be detected by the differential protection schemes on line $L_{3}$, irrespective of fault location and fault inception angle. Note that the proposed scheme is highly sensitive for high resistance LG fault than the scheme of \cite{Li}. Also, the sensitivity of proposed scheme on other types of fault is better than conventional scheme. Further, it is seen that with non-adaptive version of the proposed methodology, sensitivity of the proposed method is comparable with that of method reported in \cite{xu}. However, the sensitivity improves significantly when proposed adaptive protection methodology is used.  This brings out the importance of the suggested adaptive control of the relay restrain region.
+
+\par The proposed scheme is also compared and contrasted with segregated phase comparison scheme and distance protection scheme in presence of current and voltage inversion. It is observed that distance protection scheme maloperates for series compensated transmission lines and segregated phase comparison scheme fails to trip in presence of current inversion \cite {CPRI}. However, the proposed scheme works satisfactorily.
+
+\section{Conclusion \label{CONC}}
+\par Significant advances have been made in the current differential protection schemes for transmission line protection. State of the art methods consider both 1) modeling of shunt capacitance of line to account for line charging effect and 2) time stamped and synchronized phasors to correctly account for relative phase angle information. No doubt, these measures have significantly improved the  dependability and security of the current differential protection schemes.
+
+ In this paper, we have proposed  enhancements to further improve the dependability and security of the current differential schemes. Salient contributions of the paper include the following:
+\begin{enumerate}
+\item An adaptive relay setting procedure to control the area of the restrain region in the current differential plane. Area of the restraining region is made a function of line current. At lower currents, restraining area is kept small. This increases the sensitivity of the relay. At larger currents, area of the restraining region is increased in proportion to the current. This increases the security of the relay without compromising the sensitivity. Simulation studies show that this can improve sensitivity of the relay by at least a factor of 2.5.
+\item Extension of the proposed methodology for protection of series compensated  and multiterminal transmission
+lines. Simulation studies show that this can improve sensitivity of
+the relay by at least a factor of 2.
+\item Comparative evaluation with state of the art methods.
+\item An in depth analysis of the following contradictions:
+  \begin{itemize}
+  \item Dependability vs. Security
+  \item Speed vs. Accuracy
+  \end{itemize}
+\end{enumerate}
+
+We conclude that the proposed adaptive control of restrain region together with phasorlet algorithm for phasor estimation provides the best solution for current differential protection of (series compensated) transmission lines.  It enhances sensitivity and relaying speed without compromising the security of protection system.
+
+\bibliographystyle{IEEE}
+\bibliography{IEEEabrv,paper}
+
+\appendix
+\subsection{Discriminant Function for  Multiterminal Transmission Line \label{mulT}}
+A tapped transmission line is shown in Fig. \ref{tapped} below. Assuming that GPS synchronized measurements are available at all the three terminals. Following discriminant function can be used to detect internal fault.
+ \begin{equation}
+ I_{diff}=(I_{im}^{ser}+I_{jm}^{ser}+I_{km}^{ser})-j\frac{1}{2}({B_{im}}V_{m}^i+{B_{jm}}V_{m}^j+{B_{km}}V_{m}^k)
+ \end{equation}
+where,
+ \begin{eqnarray}
+ V_{m}^i&=&V_i-I_{im}^{ser}Z_{im}\\
+ V_{m}^j&=&V_j-I_{jm}^{ser}Z_{jm}   \\
+ V_{m}^k&=&V_k-I_{km}^{ser}Z_{km}
+ \end{eqnarray}
+
+If there is no fault on the system, $V_{m}^i=V_{m}^j=V_{m}^k$ and $I_{diff}=0$. Note that $I_{diff}$ is zero if and only if there is no fault on the line.
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[scale=0.35]{tapped}
+\caption{GPS synchronized current differential protection scheme for tapped line}
+\label{tapped}
+\end{center}
+\end{figure}
+ Although the scheme has been described using positive sequence representation, actual implementation should be carried out in phase coordinates.
+\begin{biographynophoto}{~Sanjay Dambhare}
+is currently working towards Ph.D. degree in Department of Electrical Engineering at Indian Institute of Technology-Bombay, Mumbai, India. His research interests include power system protection, numerical relays and power system computation.
+\end{biographynophoto}
+
+%\vspace{-0.00in}
+\begin{biographynophoto}{~S. A.~Soman}
+is a Professor in Department of Electrical Engineering, Indian Institute of Technology-Bombay, Mumbai, India. He has authored a book titled ``Computational Methods for Large Power System Analysis: An Object Oriented Approach'', published by Kluwer Academic in 2001. His research interests and activities include large scale power system analysis, deregulation, application of optimization techniques and power system protection.
+\end{biographynophoto}
+
+%\vspace{-0.00in}
+\begin{biographynophoto}{~M. C.~Chandorkar}
+is an Associate Professor in Department of Electrical Engineering, Indian Institute of Technology-Bombay, Mumbai, India. His research areas include application of power electronics to power quality improvement, power system protection, power electronic converters and control of electrical drives.
+\end{biographynophoto}
+%\vspace{-0.00in}
+
+\end{document}
+
+
+In \cite{phadkebook}, it is proposed that the line charging current component should be subtracted from the line current to determine the series component of the line current in the  $\pi$-equivalent circuit of the line, which in turn can be used as an accurate discriminant function.  Ref. \cite{DambharePSCC} develops this idea further.
+When the same case studies are simulated with phasorlets and half cycle DFT, protection speed is improved at the cost of accuracy.
+
+
+\par In this paper, we develop a sensitive, robust, fast and computationally efficient adaptive current differential protection scheme for protection of transmission line. The sensitivity of the proposed scheme arises because of the following technological and modeling improvements.
+\begin{itemize}
+  \item The discriminant function used in differential protection corresponds to the ratio of series branch current in the \emph{$\pi$-equivalent} model of the line. It is obtained by compensating for the line charging current component. As such, this current is location independent. Using this current, a differential protection scheme can be set in a very sensitive fashion.
+   \item GPS synchronized samples are used at the end of the transmission line. This eliminates the synchronization error in the protection scheme.
+  \item By using time stamped sample, error due to delay equalization is eliminated.
+\end{itemize}
+Therefore, it permit to detect very high resistance ground faults and phase faults on 230 kV transmission line. We also show that 1) the fastest current differential protection scheme can be realized using phasorlets, 2) higher sampling frequency improves the speed and 3) adaptive relay settings improves the sensitivity of protection.
+\par The paper also reports adaption of the proposed scheme for sensitive protection of series compensated transmission lines, mutually coupled lines and multiterminal lines. The results and comparative evaluation presented demonstrate the claim made.
